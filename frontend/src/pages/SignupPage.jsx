@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 // import api from "../../api.js";
 import axios from "axios";
 import "../index.css";
+import AlertNotification from "../components/AlertNotification.jsx";
 
 function SignupPage() {
   const [alert, setAlert] = useState(null);
@@ -28,9 +29,20 @@ function SignupPage() {
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
+
   // submit
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // if wala unod ang fields ma error
+    const emptyFields = Object.values(formData).some((field) => !field);
+    if (emptyFields) {
+      setAlert({
+        type: "danger",
+        message: "Please fill in the required fields.",
+      });
+      return;
+    }
 
     try {
       const response = await axios.post(
@@ -47,6 +59,7 @@ function SignupPage() {
         type: "success",
         message: "Account created successfully!",
       });
+      
     } catch (error) {
       if (
         error.response &&
@@ -71,18 +84,6 @@ function SignupPage() {
               </div>
               <div className="">
                 <form onSubmit={handleSubmit}>
-                  {alert && (
-                    <div className={`alert alert-${alert.type}`} role="alert">
-                      {alert.message}
-                      <button
-                        type="button"
-                        className="btn-close"
-                        data-bs-dismiss="alert"
-                        aria-label="Close"
-                        onClick={closeAlert}
-                      ></button>
-                    </div>
-                  )}
                   <div className="flex flex-row gap-2">
                     <div className="w-full">
                       <label className="block text-sm font-medium leading-6">
@@ -257,6 +258,7 @@ function SignupPage() {
                       />
                     </div>
                   </div>
+                  <AlertNotification alert={alert} closeAlert={closeAlert} />
                   <div className="flex flex-row gap-2 justify-center mt-8">
                     <button
                       className="bg-primary text-white font-bold w-full p-3 hover:bg-primary-light"
