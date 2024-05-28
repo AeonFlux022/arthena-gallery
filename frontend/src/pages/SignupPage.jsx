@@ -1,9 +1,63 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../components/Header.jsx";
+// import api from "../../api.js";
+import axios from "axios";
 import "../index.css";
 
 function SignupPage() {
+  const [alert, setAlert] = useState(null);
+  const closeAlert = () => {
+    setAlert(null);
+  };
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    password: "",
+    bio: "",
+    phoneNumber: "",
+    gender: "",
+    birthdate: "",
+    age: "",
+  });
+
+  const handleChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
+  // submit
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post(
+        `http://localhost:3005/artists/addArtist`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response.data);
+      setAlert({
+        type: "success",
+        message: "Account created successfully!",
+      });
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        setAlert({ type: "danger", message: "Error creating user." });
+      }
+    }
+  };
+
   return (
     <>
       {/* <Header /> */}
@@ -16,7 +70,19 @@ function SignupPage() {
                 <p className="text-xl">Sign up and let's get started.</p>
               </div>
               <div className="">
-                <form>
+                <form onSubmit={handleSubmit}>
+                  {alert && (
+                    <div className={`alert alert-${alert.type}`} role="alert">
+                      {alert.message}
+                      <button
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                        onClick={closeAlert}
+                      ></button>
+                    </div>
+                  )}
                   <div className="flex flex-row gap-2">
                     <div className="w-full">
                       <label className="block text-sm font-medium leading-6">
@@ -26,8 +92,9 @@ function SignupPage() {
                         <input
                           type="text"
                           name="firstName"
-                          id="firstName"
-                          className="block w-full border-0 py-2 pl-3 pr-20 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                          onChange={handleChange}
+                          value={formData.firstName}
+                          className="block w-full border-box p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
                           placeholder="First Name"
                         />
                       </div>
@@ -40,8 +107,9 @@ function SignupPage() {
                         <input
                           type="text"
                           name="middleName"
-                          id="middleName"
-                          className="block w-full border-0 py-2 pl-3 pr-20 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                          onChange={handleChange}
+                          value={formData.middleName}
+                          className="block w-full border-box p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
                           placeholder="Middle Name"
                         />
                       </div>
@@ -54,8 +122,9 @@ function SignupPage() {
                         <input
                           type="text"
                           name="lastName"
-                          id="lastName"
-                          className="block w-full border-0 py-2 pl-3 pr-20 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                          onChange={handleChange}
+                          value={formData.lastName}
+                          className="block w-full border-box p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
                           placeholder="Last Name"
                         />
                       </div>
@@ -70,8 +139,9 @@ function SignupPage() {
                         <input
                           type="text"
                           name="phoneNumber"
-                          id="phoneNumber"
-                          className="block w-full border-0 py-2 pl-3 pr-20 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                          onChange={handleChange}
+                          value={formData.phoneNumber}
+                          className="block w-full border-box p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
                           placeholder="Phone Number"
                         />
                       </div>
@@ -84,8 +154,9 @@ function SignupPage() {
                         <input
                           type="date"
                           name="birthdate"
-                          id="birthdate"
-                          className="block w-full border-0 py-2 px-3 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                          onChange={handleChange}
+                          value={formData.birthdate}
+                          className="block w-full border-box p-2.5 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
                           placeholder=""
                         />
                       </div>
@@ -98,10 +169,29 @@ function SignupPage() {
                         <input
                           type="number"
                           name="age"
-                          id="age"
-                          className="block w-full border-0 py-2 px-3 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                          onChange={handleChange}
+                          value={formData.age}
+                          className="block w-full border-box p-2.5 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
                           placeholder="Age"
                         />
+                      </div>
+                    </div>
+                    <div className="w-full">
+                      <label className="block text-sm font-medium leading-6">
+                        Gender
+                      </label>
+                      <div className="my-2 shadow-sm">
+                        <select
+                          name="gender"
+                          onChange={handleChange}
+                          value={formData.gender}
+                          aria-label="status-default"
+                          className="block w-full border-box h-11 p-2.5 bg-neutral placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                        >
+                          <option>Select your gender</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -114,8 +204,9 @@ function SignupPage() {
                         <input
                           type="text"
                           name="username"
-                          id="username"
-                          className="block w-full border-0 py-2 pl-3 pr-20 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                          onChange={handleChange}
+                          value={formData.username}
+                          className="block w-full border-box p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
                           placeholder="Username"
                         />
                       </div>
@@ -128,8 +219,9 @@ function SignupPage() {
                         <input
                           type="text"
                           name="email"
-                          id="email"
-                          className="block w-full border-0 py-2 pl-3 pr-20 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                          onChange={handleChange}
+                          value={formData.email}
+                          className="block w-full box-border p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
                           placeholder="Email"
                         />
                       </div>
@@ -143,8 +235,9 @@ function SignupPage() {
                       <input
                         type="password"
                         name="password"
-                        id="password"
-                        className="block w-full border-0 py-2 pl-3 pr-20 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                        onChange={handleChange}
+                        value={formData.password}
+                        className="block w-full box-border p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
                         placeholder="Password"
                       />
                     </div>
@@ -157,8 +250,9 @@ function SignupPage() {
                       <input
                         type="text"
                         name="bio"
-                        id="bio"
-                        className="block w-full border-0 py-2 pl-3 pr-20 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                        onChange={handleChange}
+                        value={formData.bio}
+                        className="block w-full box-border p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
                         placeholder="Describe yourself"
                       />
                     </div>
@@ -185,7 +279,7 @@ function SignupPage() {
             <h1 className="text-3xl">Already a member?</h1>
             <p className="text-xl">Login to access your account.</p>
             <div className="justify-center mt-4">
-              <Link className="" href="/login">
+              <Link className="" to="/login">
                 <button className="bg-secondary text-black font-bold p-3 w-full lg:w-44 hover:bg-secondary-dark">
                   Login
                 </button>
