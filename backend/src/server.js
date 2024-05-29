@@ -27,10 +27,9 @@ app.use("/api/artworks", artworkRoute);
 
 db.sequelize.sync().then(() => {
   app.listen(3005, () => {
-    console.log("Server running on port 3005");
-  });
-});
-// Test fork
+    console.log("Server running on port 3005")
+  })
+})
 
 // const PORT = process.env.PORT || 3005;
 // db.sequelize.sync().then(() => {
