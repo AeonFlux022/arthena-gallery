@@ -30,6 +30,7 @@ db.sequelize.sync().then(() => {
     console.log("Server running on port 3005");
   });
 });
+// Test fork
 
 // const PORT = process.env.PORT || 3005;
 // db.sequelize.sync().then(() => {
