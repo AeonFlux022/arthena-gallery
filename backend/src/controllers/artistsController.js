@@ -187,22 +187,42 @@ const loginArtist = async (req, res) => {
 
     const whereClause = username ? { username } : { email };
 
+    /* OUTDATED
     const artist = await ArtistProfile.findOne({
       where: whereClause,
     });
+    */
 
+    /* UPDATED! */
+    const artistProfile = await ArtistProfile.findOne({
+      where: whereClause,
+      include: 'artist'
+    });
+
+    /* OUTDATED
     if (!artist) {
       return res.status(404).json({ error: "User not found" });
     }
+    */
 
-    const passwordMatch = await bcrypt.compare(password, artist.password);
+    /* UPDATED! */
+    if (!artistProfile.artist) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, artistProfile.password);
 
     if (!passwordMatch) {
-      return res.status(401).json({ error: "Incorrect password" });
+        return res.status(401).json({ error: "Incorrect password" });
     }
 
     // Generate and send token
+    /* OUTDATED
     const token = jwt.sign({ id: artist.id }, secretKey, { expiresIn: "7d" });
+    */
+
+    /* UPDATED! */
+    const token = jwt.sign({ id: artistProfile.artist.id }, secretKey, { expiresIn: '7d' });
 
     // Cookie
     res.cookie("token", token, {
@@ -212,7 +232,12 @@ const loginArtist = async (req, res) => {
 
     res
       .status(200)
+      /* OUTDATED
       .json({ message: "Login successful", newtoken: token, data: artist });
+      */
+
+      /* UPDATED! */
+      .json({ message: "Login successful", token, data: artistProfile.artist });
   } catch (error) {
     console.error("Error in login:", error);
     res.status(500).json({ error: "Failed to login. Please try again later." });
@@ -248,6 +273,7 @@ const getAuthArtist = async (req, res) => {
 
     if (artist) {
       res.json({
+        message: "Authentication Successful!",
         id: user.id,
         credentials: artist.artistprofile,
       });

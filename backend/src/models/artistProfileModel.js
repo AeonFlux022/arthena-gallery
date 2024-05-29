@@ -48,14 +48,5 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true
     })
 
-    ArtistProfile.associate = models => {
-        ArtistProfile.belongsTo(models.Artist, {
-            foreignKey: {
-                name: 'artistId',
-                allowNull: false
-            }
-        })
-    }
-
     return ArtistProfile
 }

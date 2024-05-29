@@ -49,13 +49,5 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true
     })
 
-    // POSSIBLE REDUNDANCY
-    // Many to many association with artist
-    // Artwork.associate = models => {
-    //     Artwork.belongsToMany(models.Artist, {
-    //         through: 'Artist_Artworks'
-    //     })
-    // }
-
     return Artwork
 }

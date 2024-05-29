@@ -45,10 +45,11 @@ db.Sequelize = Sequelize;
 // Importing models
 db.artist = require('./artistModel.js')(sequelize, DataTypes)
 db.artistprofile = require('./artistProfileModel.js')(sequelize, DataTypes)
+
 db.artwork = require('./artworkModel.js')(sequelize, DataTypes)
 
 // Relationships
-// One to One
+// ARTIST: One to One
 db.artist.hasOne(db.artistprofile, {
   foreignKey: 'artistId',
   as: 'artistprofile',
@@ -62,10 +63,12 @@ db.artistprofile.belongsTo(db.artist, {
 // Many to Many
 db.artist.belongsToMany(db.artwork, {
   through: 'Artist_Artworks',
+  as: 'artworks',
   timestamps: false
 })
 db.artwork.belongsToMany(db.artist, {
   through: 'Artist_Artworks',
+  as: 'artists',
   timestamps: false
 })
 
