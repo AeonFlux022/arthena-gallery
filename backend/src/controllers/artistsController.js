@@ -14,7 +14,6 @@ const secretKey = require("../config/secretKey.js");
 const Artist = db.artist;
 const ArtistProfile = db.artistprofile;
 // const Artwork = db.artwork;
-// Testing fork123
 
 // CREATE Artist with Profile
 const addArtistWithProfile = async (req, res) => {
