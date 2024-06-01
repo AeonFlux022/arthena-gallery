@@ -187,22 +187,28 @@ const loginArtist = async (req, res) => {
 
     const whereClause = username ? { username } : { email };
 
-    const artist = await ArtistProfile.findOne({
+    const artistProfile = await ArtistProfile.findOne({
       where: whereClause,
+      include: "artist",
     });
 
-    if (!artist) {
+    if (!artistProfile.artist) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const passwordMatch = await bcrypt.compare(password, artist.password);
+    const passwordMatch = await bcrypt.compare(
+      password,
+      artistProfile.password
+    );
 
     if (!passwordMatch) {
       return res.status(401).json({ error: "Incorrect password" });
     }
 
     // Generate and send token
-    const token = jwt.sign({ id: artist.id }, secretKey, { expiresIn: "7d" });
+    const token = jwt.sign({ id: artistProfile.artist.id }, secretKey, {
+      expiresIn: "7d",
+    });
 
     // Cookie
     res.cookie("token", token, {
@@ -212,7 +218,7 @@ const loginArtist = async (req, res) => {
 
     res
       .status(200)
-      .json({ message: "Login successful", newtoken: token, data: artist });
+      .json({ message: "Login successful", token, data: artistProfile.artist });
   } catch (error) {
     console.error("Error in login:", error);
     res.status(500).json({ error: "Failed to login. Please try again later." });
@@ -248,6 +254,7 @@ const getAuthArtist = async (req, res) => {
 
     if (artist) {
       res.json({
+        message: "Authentication successful!",
         id: user.id,
         credentials: artist.artistprofile,
       });
@@ -273,4 +280,5 @@ module.exports = {
   deleteArtist,
   loginArtist,
   getAuthArtist,
+  // authenticateToken,
 };

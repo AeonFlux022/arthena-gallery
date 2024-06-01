@@ -1,7 +1,26 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../helpers/AuthContext";
 
 function Header() {
+  const navigate = useNavigate();
+  const { authState, setAuthState } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({
+      username: "",
+      email: "",
+      firstName: "",
+      lastName: "",
+      id: 0,
+      role: "",
+      status: false,
+    });
+    navigate("/");
+  };
+
   return (
     <>
       <nav className="bg-neutral text-black shadow-md">
@@ -37,6 +56,12 @@ function Header() {
                   className="flex hover:bg-secondary hover:text-black py-2 px-3"
                 >
                   Signup
+                </Link>
+                <Link
+                  to="/login"
+                  className="flex hover:bg-secondary hover:text-black py-2 px-3"
+                >
+                  Login
                 </Link>
               </div>
             </div>

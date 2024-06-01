@@ -1,17 +1,107 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 import "../index.css";
+import { AuthContext } from "../helpers/AuthContext";
 
 function LoginPage() {
+  const { authState, setAuthState } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [alert, setAlert] = useState(null);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const closeAlert = () => {
+    setAlert(null);
+  };
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    const data = { username, password };
+    axios.post("http://localhost:3005/auth/login", data).then((response) => {
+      if (response.data.error) {
+        setError("Invalid username or password. Please try again.");
+      } else {
+        localStorage.setItem("accessToken", response.data.token);
+        setAuthState({
+          id: response.data.id,
+          username: response.data.username,
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          email: response.data.email,
+          role: response.data.role,
+          status: true,
+        });
+        setSuccess(`Welcome, ${response.data.firstName}!`);
+        console.log(response.data);
+      }
+    });
+  };
+
   return (
     <>
       <div className="h-dvh bg-neutral">
         <section className="flex h-full px-0 flex-col lg:flex-row">
           <div className="flex flex-col w-full justify-center py-5 lg:w-3/4">
             <div className="w-full px-20 pt-20 mb-20">
+              <div>
+                {error && <div className="error">{error}</div>}
+                {success && <div className="success">{success}</div>}
+                {/* Other login form elements */}
+              </div>
               <div className="leading-6 mb-6">
                 <h1 className="text-4xl">Welcome to Arthena Gallery!</h1>
                 <p className="text-xl">Please login to continue.</p>
+              </div>
+              <div className="">
+                <form onSubmit={handleLogin}>
+                  <div className="w-full">
+                    <label className="block text-sm font-medium leading-6">
+                      Username or Email
+                    </label>
+                    <div className="my-2 shadow-sm">
+                      <input
+                        type="text"
+                        name="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        className="block w-full border-box p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                        placeholder="Enter username or email"
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full">
+                    <label className="block text-sm font-medium leading-6">
+                      Password
+                    </label>
+                    <div className="my-2 shadow-sm">
+                      <input
+                        type="password"
+                        name="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="block w-full border-box p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                        placeholder="Enter password"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-row gap-2 justify-center mt-8">
+                    <button
+                      className="bg-primary text-white font-bold w-full p-3 hover:bg-primary-light"
+                      type="submit"
+                    >
+                      Login
+                    </button>
+                    <Link
+                      to="/"
+                      className="text-center border border-black text-black font-bold w-full p-3 hover:bg-black hover:border-black hover:text-neutral"
+                    >
+                      Go Back
+                    </Link>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

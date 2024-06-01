@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import api from "../../api.js";
 import axios from "axios";
 import "../index.css";
 import AlertNotification from "../components/AlertNotification.jsx";
@@ -45,7 +44,7 @@ function SignupPage() {
     }
 
     try {
-      const response = await axios.post(
+      const response = await api.post(
         `http://localhost:3005/artists/addArtist`,
         formData,
         {
@@ -59,7 +58,9 @@ function SignupPage() {
         type: "success",
         message: "Account created successfully!",
       });
-      
+      setTimeout(() => {
+        navigate("/login");
+      }, 3500);
     } catch (error) {
       if (
         error.response &&

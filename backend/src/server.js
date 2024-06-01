@@ -13,17 +13,11 @@ app.use(express.json());
 const artistRoute = require("./routes/artistsRoute.js");
 app.use("/artists", artistRoute);
 
-const artworkRoute = require("./routes/artworksRoute.js");
-app.use("/api/artworks", artworkRoute);
+const loginRoute = require("./routes/loginRoute.js");
+app.use("/auth", loginRoute);
 
-// DB Syncing
-// db.sequelize.sync
-//   .then(() => {
-//     console.log("Drop and re-sync db.");
-//   })
-//   .catch((err) => {
-//     console.log("Failed to re-sync db: " + err.message);
-//   });
+const artworkRoute = require("./routes/artworksRoute.js");
+app.use("/artworks", artworkRoute);
 
 db.sequelize.sync().then(() => {
   app.listen(3005, () => {
