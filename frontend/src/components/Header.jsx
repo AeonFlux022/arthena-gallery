@@ -51,18 +51,42 @@ function Header() {
                 >
                   Artists
                 </Link>
-                <Link
-                  to="/signup"
-                  className="flex hover:bg-secondary hover:text-black py-2 px-3"
-                >
-                  Signup
-                </Link>
-                <Link
-                  to="/login"
-                  className="flex hover:bg-secondary hover:text-black py-2 px-3"
-                >
-                  Login
-                </Link>
+                {authState.status && authState.role === "ARTIST" && (
+                  <Link
+                    to="/artistprofile"
+                    className="flex hover:bg-secondary hover:text-black py-2 px-3"
+                  >
+                    My Profile
+                  </Link>
+                )}
+                {authState.status ? (
+                  <div className="flex items-center">
+                    <span className="flex py-2 px-3 font-bold">
+                      Hello, {authState.firstName}!
+                    </span>
+                    <Link
+                      onClick={handleLogout}
+                      className="flex hover:bg-secondary hover:text-black py-2 px-3"
+                    >
+                      Logout
+                    </Link>
+                  </div>
+                ) : (
+                  <>
+                    <Link
+                      to="/signup"
+                      className="flex hover:bg-secondary hover:text-black py-2 px-3"
+                    >
+                      Signup
+                    </Link>
+                    <Link
+                      to="/login"
+                      className="flex hover:bg-secondary hover:text-black py-2 px-3"
+                    >
+                      Login
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>

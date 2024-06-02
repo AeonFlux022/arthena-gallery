@@ -11,6 +11,7 @@ import Dashboard from "./admin/Dashboard.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import ArtistProfilePage from "./pages/ArtistProfilePage.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -59,6 +60,7 @@ function App() {
           <Route path="/admin" exact element={<Dashboard />} />
           <Route path="/signup" exact element={<SignupPage />} />
           <Route path="/login" exact element={<LoginPage />} />
+          <Route path="/artistprofile" exact element={<ArtistProfilePage />} />
         </Routes>
       </AuthContext.Provider>
     </>

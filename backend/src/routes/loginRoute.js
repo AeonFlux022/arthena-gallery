@@ -10,8 +10,8 @@ router.post("/login", async (req, res) => {
   try {
     const { username, firstName, lastName, email, password } = req.body;
 
-    if (!username && !email) {
-      return res.status(400).json({ error: "Username or email is required" });
+    if (!username) {
+      return res.status(400).json({ error: "Username is required" });
     }
 
     const whereClause = username ? { username } : { email };
@@ -22,9 +22,8 @@ router.post("/login", async (req, res) => {
     });
 
     if (!artistProfile.artist) {
-      return res
-        .status(404)
-        .json({ error: "User not found. Please try again." });
+      res.status(404).json({ error: "User not found. Please try again." });
+      return;
     }
 
     const passwordMatch = await bcrypt.compare(
@@ -33,9 +32,8 @@ router.post("/login", async (req, res) => {
     );
 
     if (!passwordMatch) {
-      return res
-        .status(401)
-        .json({ error: "Incorrect password. Please try again." });
+      res.status(401).json({ error: "Incorrect password. Please try again." });
+      return;
     }
 
     const accessToken = sign(
@@ -45,7 +43,7 @@ router.post("/login", async (req, res) => {
         firstName: artistProfile.firstName,
         lastName: artistProfile.lastName,
         artistProfile: artistProfile.id,
-        role: artistProfile.role,
+        role: artistProfile.artist.role,
       },
       "secret"
     );
@@ -56,7 +54,7 @@ router.post("/login", async (req, res) => {
       lastName: artistProfile.lastName,
       email: artistProfile.email,
       id: artistProfile.id,
-      role: artistProfile.role,
+      role: artistProfile.artist.role,
     });
   } catch (error) {
     console.error("Error in login:", error);

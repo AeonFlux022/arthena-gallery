@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "../index.css";
 import { AuthContext } from "../helpers/AuthContext";
+import AlertNotification from "../components/AlertNotification.jsx";
 
 function LoginPage() {
   const { authState, setAuthState } = useContext(AuthContext);
@@ -18,26 +19,49 @@ function LoginPage() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    // Check if username and password fields are not empty
+    if (!username || !password) {
+      setAlert({
+        type: "danger",
+        message: "Please fill in all fields.",
+      });
+      return;
+    }
 
     const data = { username, password };
-    axios.post("http://localhost:3005/auth/login", data).then((response) => {
-      if (response.data.error) {
-        setError("Invalid username or password. Please try again.");
-      } else {
-        localStorage.setItem("accessToken", response.data.token);
-        setAuthState({
-          id: response.data.id,
-          username: response.data.username,
-          firstName: response.data.firstName,
-          lastName: response.data.lastName,
-          email: response.data.email,
-          role: response.data.role,
-          status: true,
+    try {
+      axios.post("http://localhost:3005/auth/login", data).then((response) => {
+        if (response.data.error) {
+          setAlert({
+            type: "danger",
+            message: "Invalid username or password.",
+          });
+        } else {
+          localStorage.setItem("accessToken", response.data.token);
+          setAuthState({
+            id: response.data.id,
+            username: response.data.username,
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            email: response.data.email,
+            role: response.data.role,
+            status: true,
+          });
+          navigate("/");
+        }
+      });
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        setAlert({
+          type: "danger",
+          message: "Error logging in. Please try again.",
         });
-        setSuccess(`Welcome, ${response.data.firstName}!`);
-        console.log(response.data);
       }
-    });
+    }
   };
 
   return (
@@ -46,11 +70,7 @@ function LoginPage() {
         <section className="flex h-full px-0 flex-col lg:flex-row">
           <div className="flex flex-col w-full justify-center py-5 lg:w-3/4">
             <div className="w-full px-20 pt-20 mb-20">
-              <div>
-                {error && <div className="error">{error}</div>}
-                {success && <div className="success">{success}</div>}
-                {/* Other login form elements */}
-              </div>
+              <AlertNotification alert={alert} closeAlert={closeAlert} />
               <div className="leading-6 mb-6">
                 <h1 className="text-4xl">Welcome to Arthena Gallery!</h1>
                 <p className="text-xl">Please login to continue.</p>

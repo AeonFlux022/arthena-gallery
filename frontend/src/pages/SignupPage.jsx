@@ -44,8 +44,8 @@ function SignupPage() {
     }
 
     try {
-      const response = await api.post(
-        `http://localhost:3005/artists/addArtist`,
+      const response = await axios.post(
+        `http://localhost:3005/artists/`,
         formData,
         {
           headers: {
