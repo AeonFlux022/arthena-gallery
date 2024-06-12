@@ -23,6 +23,8 @@ function SignupPage() {
     gender: "",
     birthdate: "",
     age: "",
+    address: "",
+    image: "",
   });
 
   const handleChange = (event) => {
@@ -33,15 +35,16 @@ function SignupPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // fix ta ni dapat
     // if wala unod ang fields ma error
-    const emptyFields = Object.values(formData).some((field) => !field);
-    if (emptyFields) {
-      setAlert({
-        type: "danger",
-        message: "Please fill in the required fields.",
-      });
-      return;
-    }
+    // const emptyFields = Object.values(formData).some((field) => !field);
+    // if (emptyFields) {
+    //   setAlert({
+    //     type: "danger",
+    //     message: "Please fill in the required fields.",
+    //   });
+    //   return;
+    // }
 
     try {
       const response = await axios.post(
@@ -186,8 +189,7 @@ function SignupPage() {
                         <select
                           name="gender"
                           onChange={handleChange}
-                          value={formData.gender || ""}
-                          aria-label="status-default"
+                          value={formData.gender}
                           className="block w-full border-box h-11 p-2.5 bg-neutral placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
                         >
                           <option value="">Select your gender</option>
@@ -246,16 +248,16 @@ function SignupPage() {
                   </div>
                   <div className="w-full">
                     <label className="block text-sm font-medium leading-6">
-                      Description
+                      Address
                     </label>
                     <div className="my-2 shadow-sm">
                       <input
                         type="text"
-                        name="bio"
+                        name="address"
                         onChange={handleChange}
-                        value={formData.bio}
+                        value={formData.address}
                         className="block w-full box-border p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
-                        placeholder="Describe yourself"
+                        placeholder="Address"
                       />
                     </div>
                   </div>

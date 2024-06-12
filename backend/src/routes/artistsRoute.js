@@ -50,6 +50,8 @@ router.post("/", async (req, res) => {
       gender,
       birthdate,
       age,
+      address,
+      image,
     } = req.body;
 
     const newArtist = await Artist.create({ role });
@@ -73,6 +75,8 @@ router.post("/", async (req, res) => {
       gender,
       birthdate,
       age,
+      address,
+      image,
     });
 
     res.status(201).json({
@@ -142,6 +146,8 @@ router.put("/update/:id", async (req, res) => {
     gender,
     birthdate,
     age,
+    address,
+    image,
   } = req.body;
 
   try {
@@ -162,6 +168,8 @@ router.put("/update/:id", async (req, res) => {
     artistProfile.gender = gender;
     artistProfile.birthdate = birthdate;
     artistProfile.age = age;
+    artistProfile.address = address;
+    artistProfile.image = image;
 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     artistProfile.password = hashedPassword;
