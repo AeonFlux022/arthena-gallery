@@ -12,6 +12,7 @@ import LandingPage from "./pages/LandingPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import ArtistProfilePage from "./pages/ArtistProfilePage.jsx";
+import EditArtist from "./pages/EditArtist.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -65,6 +66,7 @@ function App() {
             exact
             element={<ArtistProfilePage />}
           />
+          <Route path="/editartist/:id" exact element={<EditArtist />} />
         </Routes>
       </AuthContext.Provider>
     </>

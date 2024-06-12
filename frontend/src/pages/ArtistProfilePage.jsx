@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 import "../index.css";
 import axios from "axios";
@@ -20,15 +20,14 @@ function ArtistProfilePage() {
       console.log(authState.id);
       const profileData = await profileResponse.json();
       setArtistProfile(profileData);
-      // console.log(profileData);
     } catch (error) {
       console.error("Error fetching user and artist data:", error);
     }
   };
 
   useEffect(() => {
-    fetchArtist();
-  }, []);
+    fetchArtist(authState.id);
+  }, [authState.id]);
 
   return (
     <>
@@ -47,9 +46,11 @@ function ArtistProfilePage() {
                 </h1>
                 <span>{artistProfile.email}</span>
               </div>
-              <button className="p-3 text-white bg-black w-32">
-                Contact Me
-              </button>
+              <Link to={`/editartist/${authState.id}`}>
+                <button className="p-3 text-white bg-black w-32 hover:bg-gray-800">
+                  Edit Profile
+                </button>
+              </Link>
             </div>
 
             <blockquote className="pt-5 text-justify">
