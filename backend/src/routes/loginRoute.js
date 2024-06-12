@@ -8,7 +8,8 @@ const { sign } = require("jsonwebtoken");
 
 router.post("/login", async (req, res) => {
   try {
-    const { username, firstName, lastName, email, password } = req.body;
+    const { username, firstName, lastName, email, password, artistId } =
+      req.body;
 
     if (!username) {
       return res.status(400).json({ error: "Username is required" });
@@ -38,11 +39,11 @@ router.post("/login", async (req, res) => {
 
     const accessToken = sign(
       {
+        id: artistProfile.id,
         username: artistProfile.username,
         email: artistProfile.email,
         firstName: artistProfile.firstName,
         lastName: artistProfile.lastName,
-        artistProfile: artistProfile.id,
         role: artistProfile.artist.role,
       },
       "secret"

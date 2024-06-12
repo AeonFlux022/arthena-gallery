@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../helpers/AuthContext";
 
@@ -18,7 +18,10 @@ function Header() {
       role: "",
       status: false,
     });
-    navigate("/");
+    // navigate("/");
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
   };
 
   return (
@@ -53,7 +56,7 @@ function Header() {
                 </Link>
                 {authState.status && authState.role === "ARTIST" && (
                   <Link
-                    to="/artistprofile"
+                    to={`/artistprofile/${authState.id}`}
                     className="flex hover:bg-secondary hover:text-black py-2 px-3"
                   >
                     My Profile
@@ -66,6 +69,7 @@ function Header() {
                     </span>
                     <Link
                       onClick={handleLogout}
+                      type="button"
                       className="flex hover:bg-secondary hover:text-black py-2 px-3"
                     >
                       Logout

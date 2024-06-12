@@ -89,13 +89,13 @@ router.post("/", async (req, res) => {
 
 // GET ALL USERS
 router.get("/", async (req, res) => {
-  const allArtists = await Artist.findAll({
-    include: [
-      {
-        model: ArtistProfile,
-        as: "artistprofile",
-      },
-    ],
+  const allArtists = await ArtistProfile.findAll({
+    // include: [
+    //   {
+    //     model: ArtistProfile,
+    //     as: "artistprofile",
+    //   },
+    // ],
   });
   res.json(allArtists);
 });
@@ -104,14 +104,14 @@ router.get("/", async (req, res) => {
 router.get("/byId/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const getArtist = await Artist.findOne({
+    const getArtist = await ArtistProfile.findOne({
       where: { id },
-      include: [
-        {
-          model: ArtistProfile,
-          as: "artistprofile",
-        },
-      ],
+      // include: [
+      //   {
+      //     model: ArtistProfile,
+      //     as: "artistprofile",
+      //   },
+      // ],
     });
 
     if (!getArtist) {

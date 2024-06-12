@@ -186,11 +186,11 @@ function SignupPage() {
                         <select
                           name="gender"
                           onChange={handleChange}
-                          value={formData.gender}
+                          value={formData.gender || ""}
                           aria-label="status-default"
                           className="block w-full border-box h-11 p-2.5 bg-neutral placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
                         >
-                          <option>Select your gender</option>
+                          <option value="">Select your gender</option>
                           <option value="male">Male</option>
                           <option value="female">Female</option>
                         </select>

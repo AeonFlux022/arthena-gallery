@@ -60,7 +60,11 @@ function App() {
           <Route path="/admin" exact element={<Dashboard />} />
           <Route path="/signup" exact element={<SignupPage />} />
           <Route path="/login" exact element={<LoginPage />} />
-          <Route path="/artistprofile" exact element={<ArtistProfilePage />} />
+          <Route
+            path="/artistprofile/:id"
+            exact
+            element={<ArtistProfilePage />}
+          />
         </Routes>
       </AuthContext.Provider>
     </>
