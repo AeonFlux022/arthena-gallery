@@ -27,9 +27,28 @@
 // STRUCTURE NI KEVIN //
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 const { Artist, ArtistProfile } = require("../models");
 const bcrypt = require("bcrypt");
 const saltRounds = bcrypt.genSaltSync(10);
+
+// multer config
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const uploadFolder = path.join(__dirname, "../uploads");
+    if (!fs.existsSync(uploadFolder)) {
+      fs.mkdirSync(uploadFolder);
+    }
+    cb(null, uploadFolder);
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage });
 
 // Secret key
 const secretKey = require("../config/secretKey.js");
@@ -132,23 +151,23 @@ router.get("/byId/:id", async (req, res) => {
 });
 
 // UPDATE USER
-router.put("/update/:id", async (req, res) => {
+router.put("/update/:id", upload.single("image"), async (req, res) => {
   const artistId = req.params.id;
   const {
     firstName,
     middleName,
     lastName,
-    username,
+    // username,
     email,
-    password,
+    // password,
     bio,
     phoneNumber,
     gender,
     birthdate,
     age,
     address,
-    image,
   } = req.body;
+  const image = req.file ? req.file.filename : null;
 
   try {
     const artistProfile = await ArtistProfile.findOne({
@@ -161,7 +180,7 @@ router.put("/update/:id", async (req, res) => {
     artistProfile.firstName = firstName;
     artistProfile.middleName = middleName;
     artistProfile.lastName = lastName;
-    artistProfile.username = username;
+    // artistProfile.username = username;
     artistProfile.email = email;
     artistProfile.bio = bio;
     artistProfile.phoneNumber = phoneNumber;
@@ -169,16 +188,19 @@ router.put("/update/:id", async (req, res) => {
     artistProfile.birthdate = birthdate;
     artistProfile.age = age;
     artistProfile.address = address;
-    artistProfile.image = image;
+    if (image) {
+      artistProfile.image = image;
+    }
 
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    artistProfile.password = hashedPassword;
+    // const hashedPassword = await bcrypt.hash(password, saltRounds);
+    // artistProfile.password = hashedPassword;
 
     await artistProfile.save();
     res.json({
       message: "Artist account updated successfully",
       data: { artistProfile },
     });
+    // res.json(artistProfile);
   } catch (error) {
     console.error("Error updating user:", error);
     res.status(500).json({ error: "Internal server error" });
