@@ -9,6 +9,7 @@ import AlertNotification from "../components/AlertNotification.jsx";
 
 function EditArtist() {
   const { authState, setAuthState } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [artistProfile, setArtistProfile] = useState({});
   const [alert, setAlert] = useState(null);
   const closeAlert = () => {
@@ -16,16 +17,13 @@ function EditArtist() {
   };
 
   const fetchArtist = async () => {
-    // let { artistId } = useParams;
     try {
       // Fetch the artist profile data
       const profileResponse = await fetch(
         `http://localhost:3005/artists/byId/${authState.id}`
       );
-      // console.log(authState.id);
       const profileData = await profileResponse.json();
       setArtistProfile(profileData);
-      // console.log(profileData);
     } catch (error) {
       console.error("Error fetching user and artist data:", error);
     }
@@ -77,9 +75,9 @@ function EditArtist() {
       .put(`http://localhost:3005/artists/update/${authState.id}`, formData)
       .then((response) => {
         setAlert({ type: "success", message: "Profile updated successfully." });
-        // setTimeout(() => {
-        //   navigate("/");
-        // }, 2000);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       })
       .catch((error) => {
         setAlert({ type: "danger", message: "Failed to update profile." });
