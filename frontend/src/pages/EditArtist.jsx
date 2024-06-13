@@ -74,9 +74,16 @@ function EditArtist() {
     axios
       .put(`http://localhost:3005/artists/update/${authState.id}`, formData)
       .then((response) => {
+        setAuthState((prevAuthState) => ({
+          ...prevAuthState,
+          firstName: artistProfile.firstName,
+          lastName: artistProfile.lastName,
+          email: artistProfile.email,
+        }));
+
         setAlert({ type: "success", message: "Profile updated successfully." });
         setTimeout(() => {
-          navigate("/");
+          navigate(`/artistProfile/${authState.id}`);
         }, 2000);
       })
       .catch((error) => {

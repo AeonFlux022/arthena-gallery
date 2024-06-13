@@ -83,7 +83,7 @@ function Header() {
                 {authState.status ? (
                   <div className="flex items-center">
                     <span className="flex py-2 px-3 font-bold">
-                      Hello, {artistProfile.firstName}!
+                      Hello, {authState.firstName}!
                     </span>
                     <Link
                       onClick={handleLogout}
