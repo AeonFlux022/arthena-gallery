@@ -23,7 +23,7 @@ function AlertNotification({ alert, closeAlert }) {
           alert.type === "success"
             ? "bg-green-500 text-white"
             : "bg-red-500 text-white"
-        } rounded-md p-4 w-80 shadow-md flex justify-between items-center`}
+        } rounded-md p-4 w-96 shadow-md flex justify-between items-center`}
         role="alert"
       >
         {alert.message}

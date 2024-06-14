@@ -36,9 +36,8 @@ function Header() {
       role: "",
       status: false,
     });
-    // navigate("/");
     setTimeout(() => {
-      navigate("/");
+      navigate("/login");
     }, 1000);
   };
 

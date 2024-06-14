@@ -19,6 +19,7 @@ function LoginPage() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+
     // Check if username and password fields are not empty
     if (!username || !password) {
       setAlert({
@@ -30,35 +31,39 @@ function LoginPage() {
 
     const data = { username, password };
     try {
-      axios.post("http://localhost:3005/auth/login", data).then((response) => {
-        if (response.data.error) {
-          setAlert({
-            type: "danger",
-            message: "Invalid username or password.",
-          });
-        } else {
-          localStorage.setItem("accessToken", response.data.token);
-          setAuthState({
-            id: response.data.id,
-            username: response.data.username,
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            email: response.data.email,
-            role: response.data.role,
-            status: true,
-          });
-          navigate("/");
-        }
-      });
+      const response = await axios.post(
+        "http://localhost:3005/auth/login",
+        data
+      );
+      if (response.data.error) {
+        setAlert({
+          type: "danger",
+          message: "Invalid username or password.",
+        });
+      } else {
+        localStorage.setItem("accessToken", response.data.token);
+        setAuthState({
+          id: response.data.id,
+          username: response.data.username,
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          email: response.data.email,
+          role: response.data.role,
+          status: true,
+        });
+        navigate("/");
+      }
     } catch (error) {
       if (
         error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
+        error.response.status === 400 &&
+        error.response.data.error
       ) {
+        setAlert({ type: "danger", message: error.response.data.error });
+      } else {
         setAlert({
           type: "danger",
-          message: "Error logging in. Please try again.",
+          message: "Wrong username or password combination.",
         });
       }
     }
