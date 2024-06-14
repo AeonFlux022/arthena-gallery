@@ -36,8 +36,14 @@ function ArtistProfilePage() {
           <div className="flex-shrink-0 p-4">
             <img
               className="w-36 h-36 rounded-full"
-              src={`http://localhost:3005/uploads/${artistProfile.image}`}
+              src={`http://localhost:3005/uploads/${
+                artistProfile.image || "https://placehold.co/300x300"
+              }`}
               alt="Avatar"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "https://placehold.co/300x300";
+              }}
             />
           </div>
           <div className="flex-grow p-5 pt-6">

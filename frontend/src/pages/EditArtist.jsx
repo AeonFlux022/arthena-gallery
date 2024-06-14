@@ -279,14 +279,15 @@ function EditArtist() {
                     src={
                       file
                         ? URL.createObjectURL(file)
-                        : `http://localhost:3005/uploads/${artistProfile.image}`
+                        : `http://localhost:3005/uploads/${artistProfile.image}` ||
+                          "https://placehold.co/300x300"
                     }
                     alt="avatar"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://placehold.co/300x300";
+                    }}
                   />
-                  {/* <img
-                    className="w-48 h-48 rounded-full mx-auto border-4 border-primary"
-                    src={`http://localhost:3005/uploads/${artistProfile.image}`}
-                  /> */}
                   <div>
                     <label
                       htmlFor="profilePicture"
