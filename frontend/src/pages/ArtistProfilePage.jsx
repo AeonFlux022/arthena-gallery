@@ -17,9 +17,10 @@ function ArtistProfilePage() {
       const profileResponse = await fetch(
         `http://localhost:3005/artists/byId/${authState.id}`
       );
-      console.log(authState.id);
+      // console.log(authState.id);
       const profileData = await profileResponse.json();
       setArtistProfile(profileData);
+      console.log(artistProfile);
     } catch (error) {
       console.error("Error fetching user and artist data:", error);
     }
@@ -33,32 +34,30 @@ function ArtistProfilePage() {
     <>
       <Header />
       <div className="px-4 md:px-6 lg:px-8 my-5">
-        <div className="p-4 flex justify-around items-center bg-yellow-300 rounded-br-lg rounded-tl-lg">
-          <img
-            className="w-48 h-48 rounded-full mx-auto"
-            src="https://placehold.co/200x200"
-          />
-          <div className="p-5 pt-6">
-            <div className="flex justify-between">
+        <div className="flex bg-yellow-300 rounded-br-lg rounded-tl-lg">
+          <div className="flex-shrink-0 p-4">
+            <img
+              className="w-36 h-36 rounded-full"
+              src={`http://localhost:3005/uploads/${artistProfile.image}`}
+              alt="Artist Profile"
+            />
+          </div>
+          <div className="flex-grow p-5 pt-6">
+            <div className="flex justify-between items-start">
               <div>
                 <h1 className="text-2xl font-bold">
                   {artistProfile.firstName}, {artistProfile.lastName}
                 </h1>
-                <span>{artistProfile.email}</span>
+                <span className="block">{artistProfile.email}</span>
               </div>
               <Link to={`/editartist/${authState.id}`}>
-                <button className="p-3 text-white bg-black w-32 hover:bg-gray-800">
+                <button className="p-2 text-white bg-black w-32 hover:bg-gray-800">
                   Edit Profile
                 </button>
               </Link>
             </div>
-
             <blockquote className="pt-5 text-justify">
-              "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-              commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-              penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-              Donec quam felis, ultricies nec, pellentesque eu, pretium quis,
-              sem. Nulla consequat massa quis enim."
+              {artistProfile.bio}
             </blockquote>
           </div>
         </div>

@@ -166,8 +166,9 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     birthdate,
     age,
     address,
+    image: imageName,
   } = req.body;
-  const image = req.file ? req.file.filename : null;
+  // const image = req.file ? req.file.filename : null;
 
   try {
     const artistProfile = await ArtistProfile.findOne({
@@ -188,8 +189,11 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     artistProfile.birthdate = birthdate;
     artistProfile.age = age;
     artistProfile.address = address;
-    if (image) {
-      artistProfile.image = image;
+
+    if (req.file) {
+      artistProfile.image = req.file.filename; // Store the file name, not the file object
+    } else if (imageName) {
+      artistProfile.image = imageName; // Use the provided image name
     }
 
     // const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -200,7 +204,6 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
       message: "Artist account updated successfully",
       data: { artistProfile },
     });
-    // res.json(artistProfile);
   } catch (error) {
     console.error("Error updating user:", error);
     res.status(500).json({ error: "Internal server error" });

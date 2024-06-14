@@ -6,15 +6,18 @@ import axios from "axios";
 import Header from "../components/Header";
 import moment from "moment";
 import AlertNotification from "../components/AlertNotification.jsx";
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 
 function EditArtist() {
   const { authState, setAuthState } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [artistProfile, setArtistProfile] = useState({});
+  const [artistProfile, setArtistProfile] = useState({ image: null });
   const [alert, setAlert] = useState(null);
   const closeAlert = () => {
     setAlert(null);
   };
+  const [file, setFile] = useState(null);
 
   const fetchArtist = async () => {
     try {
@@ -40,10 +43,12 @@ function EditArtist() {
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
-    if (files) {
+    if (files && files.length > 0) {
+      const file = files[0];
+      setFile(file);
       setArtistProfile((prevArtistProfile) => ({
         ...prevArtistProfile,
-        [name]: files[0],
+        [name]: file.name, // Store the file name, not the file object
       }));
     } else {
       setArtistProfile((prevArtistProfile) => ({
@@ -268,10 +273,32 @@ function EditArtist() {
               </div>
               <div className="w-1/2">
                 <span className="font-medium leading-6">Profile Picture</span>
-                <img
-                  className="w-48 h-48 rounded-full mx-auto"
-                  src="https://placehold.co/300x300"
-                />
+                <div className="relative">
+                  <img
+                    className="w-48 h-48 rounded-full mx-auto border-4 border-primary"
+                    src={
+                      file
+                        ? URL.createObjectURL(file)
+                        : `http://localhost:3005/uploads/${artistProfile.image}`
+                    }
+                    alt="avatar"
+                  />
+                  <div>
+                    <label
+                      htmlFor="profilePicture"
+                      className="absolute p-2 cursor-pointer w-16 text-center bg-primary text-white bottom-0 left-0 translate-x-56 -translate-y-2  hover:bg-primary-dark"
+                    >
+                      Edit
+                    </label>
+                    <input
+                      id="profilePicture"
+                      type="file"
+                      className="hidden"
+                      name="image"
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
               </div>
             </section>
           </form>
