@@ -12,7 +12,7 @@ import "react-image-crop/dist/ReactCrop.css";
 function EditArtist() {
   const { authState, setAuthState } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [artistProfile, setArtistProfile] = useState({ image: null });
+  const [artistProfile, setArtistProfile] = useState({});
   const [alert, setAlert] = useState(null);
   const closeAlert = () => {
     setAlert(null);
@@ -43,12 +43,12 @@ function EditArtist() {
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
-    if (files && files.length > 0) {
+    if (files) {
       const file = files[0];
       setFile(file);
       setArtistProfile((prevArtistProfile) => ({
         ...prevArtistProfile,
-        [name]: file.name, // Store the file name, not the file object
+        [name]: files[0], // Store the file name, not the file object
       }));
     } else {
       setArtistProfile((prevArtistProfile) => ({
@@ -283,12 +283,16 @@ function EditArtist() {
                     }
                     alt="avatar"
                   />
+                  {/* <img
+                    className="w-48 h-48 rounded-full mx-auto border-4 border-primary"
+                    src={`http://localhost:3005/uploads/${artistProfile.image}`}
+                  /> */}
                   <div>
                     <label
                       htmlFor="profilePicture"
-                      className="absolute p-2 cursor-pointer w-16 text-center bg-primary text-white bottom-0 left-0 translate-x-56 -translate-y-2  hover:bg-primary-dark"
+                      className="absolute p-3 cursor-pointer w-12 h-12 rounded-full items-center bg-primary text-white bottom-0 left-0 translate-x-60 -translate-y-1  hover:bg-primary-dark"
                     >
-                      Edit
+                      <img src="/photo-camera.svg" className="mx-auto" />
                     </label>
                     <input
                       id="profilePicture"

@@ -17,10 +17,8 @@ function ArtistProfilePage() {
       const profileResponse = await fetch(
         `http://localhost:3005/artists/byId/${authState.id}`
       );
-      // console.log(authState.id);
       const profileData = await profileResponse.json();
       setArtistProfile(profileData);
-      console.log(artistProfile);
     } catch (error) {
       console.error("Error fetching user and artist data:", error);
     }
@@ -39,7 +37,7 @@ function ArtistProfilePage() {
             <img
               className="w-36 h-36 rounded-full"
               src={`http://localhost:3005/uploads/${artistProfile.image}`}
-              alt="Artist Profile"
+              alt="Avatar"
             />
           </div>
           <div className="flex-grow p-5 pt-6">

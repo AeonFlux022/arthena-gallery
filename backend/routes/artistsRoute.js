@@ -166,9 +166,9 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     birthdate,
     age,
     address,
-    image: imageName,
+    // image: imageName,
   } = req.body;
-  // const image = req.file ? req.file.filename : null;
+  const image = req.file ? req.file.filename : null;
 
   try {
     const artistProfile = await ArtistProfile.findOne({
@@ -190,14 +190,15 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     artistProfile.age = age;
     artistProfile.address = address;
 
-    if (req.file) {
-      artistProfile.image = req.file.filename; // Store the file name, not the file object
-    } else if (imageName) {
-      artistProfile.image = imageName; // Use the provided image name
-    }
+    // if (req.file) {
+    //   artistProfile.image = req.file.filename; // Store the file name, not the file object
+    // } else if (imageName) {
+    //   artistProfile.image = imageName; // Use the provided image name
+    // }
 
-    // const hashedPassword = await bcrypt.hash(password, saltRounds);
-    // artistProfile.password = hashedPassword;
+    if (image) {
+      artistProfile.image = image;
+    }
 
     await artistProfile.save();
     res.json({
