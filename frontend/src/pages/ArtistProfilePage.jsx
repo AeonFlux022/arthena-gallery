@@ -32,7 +32,7 @@ function ArtistProfilePage() {
     <>
       <Header />
       <div className="px-4 md:px-6 lg:px-8 my-5">
-        <div className="flex bg-yellow-300 rounded-br-lg rounded-tl-lg">
+        <div className="flex bg-primary-light text-white rounded-br-lg rounded-tl-lg mb-5">
           <div className="flex-shrink-0 p-4">
             <img
               className="w-36 h-36 rounded-full"
@@ -63,6 +63,16 @@ function ArtistProfilePage() {
             <blockquote className="pt-5 text-justify">
               {artistProfile.bio}
             </blockquote>
+          </div>
+        </div>
+        <div className="flex">
+          <div className="flex flex-col bg-gray-200 border border-primary rounded p-2 h-36 w-full justify-center items-center text-center">
+            <Link to={`/artistprofile/${authState.id}/add`}>
+              <button className="w-56 p-3 bg-secondary text-black font-bold hover:bg-secondary-dark">
+                Upload your artwork
+              </button>
+            </Link>
+            <span>or drag your file here.</span>
           </div>
         </div>
       </div>

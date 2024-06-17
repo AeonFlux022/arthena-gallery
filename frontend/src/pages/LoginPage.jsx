@@ -77,7 +77,9 @@ function LoginPage() {
             <div className="w-full px-20 pt-20 mb-20">
               <AlertNotification alert={alert} closeAlert={closeAlert} />
               <div className="leading-6 mb-6">
-                <h1 className="text-4xl">Welcome to Arthena Gallery!</h1>
+                <h1 className="text-4xl font-bold">
+                  Welcome to Arthena Gallery!
+                </h1>
                 <p className="text-xl">Please login to continue.</p>
               </div>
               <div className="">
