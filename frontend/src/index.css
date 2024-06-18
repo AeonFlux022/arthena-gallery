@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.card {
+  @apply cursor-pointer h-80 rounded-lg shadow-md hover:shadow-2xl transition-shadow duration-300
+}
+
+.card-image {
+  @apply bg-center bg-no-repeat
+}
+
+.card-body {
+  @apply p-3
+}

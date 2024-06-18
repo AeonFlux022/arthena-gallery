@@ -4,11 +4,14 @@ import { AuthContext } from "../helpers/AuthContext";
 import "../index.css";
 import axios from "axios";
 import Header from "../components/Header";
+import moment from "moment";
 
 function ArtistProfilePage() {
   const [loggedArtist, setLoggedArtist] = useState({});
   const [artistProfile, setArtistProfile] = useState({});
+  const [artworkData, setArtworkData] = useState({});
   const { authState, setAuthState } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   // const [artistId, setArtistId] = useState(null);
 
   const fetchArtist = async () => {
@@ -19,13 +22,38 @@ function ArtistProfilePage() {
       );
       const profileData = await profileResponse.json();
       setArtistProfile(profileData);
+      // console.log(authState.id);
     } catch (error) {
       console.error("Error fetching user and artist data:", error);
     }
   };
 
   useEffect(() => {
-    fetchArtist(authState.id);
+    if (authState.id) {
+      fetchArtist();
+    }
+  }, [authState.id]);
+
+  const fetchArtworks = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `http://localhost:3005/artworks/all/byId/${authState.id}`
+      );
+      const responseData = await response.json();
+      // console.log(responseData);
+      setArtworkData(responseData.artworks);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching artworks:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (authState.id) {
+      fetchArtworks();
+    }
   }, [authState.id]);
 
   return (
@@ -74,10 +102,52 @@ function ArtistProfilePage() {
             </Link>
           </div>
         </div>
-        <section className="my-5 h-44 p-3">
-          <div className="font-bold text-xl space-y-3">
+        <section className="my-5 h-44">
+          <div className="font-bold text-xl space-y-3 mb-5">
             <h1>Artworks</h1>
             <hr />
+          </div>
+          <div className="">
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              <div className="mb-3">
+                {artworkData.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+                    {artworkData.map((artwork) => (
+                      <>
+                        <div className="card w-full border border-primary">
+                          <img
+                            className="card-image w-full h-48 object-cover"
+                            src={
+                              artwork.imageUrl
+                                ? `http://localhost:3005/uploads/${artwork.imageUrl}`
+                                : "https://placeholder.com/500x300"
+                            }
+                          />
+                          <div className="card-body">
+                            <div className="flex flex-row justify-between">
+                              <h1 className="font-bold">{artwork.title}</h1>
+                              <span className="text-lg">
+                                &#8369;{artwork.price}
+                              </span>
+                            </div>
+                            <div className="flex flex-col">
+                              <span className="text-sm mb-3">
+                                {artwork.status}
+                              </span>
+                              <span>{artwork.description}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ))}
+                  </div>
+                ) : (
+                  <div>No artworks found.</div>
+                )}
+              </div>
+            )}
           </div>
         </section>
       </div>
