@@ -69,7 +69,7 @@ function ArtistProfilePage() {
           <div className="flex flex-col bg-gray-200 border border-primary rounded p-2 h-36 w-full justify-center items-center text-center">
             <Link to={`/artistprofile/${authState.id}/add`}>
               <button className="w-56 p-3 bg-secondary text-black font-bold hover:bg-secondary-dark">
-                Upload your artwork
+                Submit your artwork
               </button>
             </Link>
             <span>or drag your file here.</span>

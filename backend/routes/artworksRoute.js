@@ -40,7 +40,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // ADD ARTWORK
-router.post("/:artistId", async (req, res) => {
+router.post("/:artistId", upload.single("imageUrl"), async (req, res) => {
   try {
     const {
       title,
@@ -49,10 +49,10 @@ router.post("/:artistId", async (req, res) => {
       availability,
       dimensions,
       medium,
-      imageUrl,
       status,
     } = req.body;
     const artistId = req.params.artistId;
+    const imageUrl = req.file ? req.file.filename : null;
 
     const artist = await Artist.findOne({ where: { id: artistId } });
     if (!artist) {

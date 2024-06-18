@@ -276,7 +276,7 @@ function EditArtist() {
                 <div className="relative">
                   <img
                     className="w-48 h-48 rounded-full mx-auto border-4 border-primary"
-                    src={
+                    src={ 
                       file
                         ? URL.createObjectURL(file)
                         : `http://localhost:3005/uploads/${artistProfile.image}` ||
