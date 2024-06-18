@@ -33,5 +33,12 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  Artist.associate = (models) => {
+    Artist.belongsToMany(models.Artwork, {
+      through: "ArtistArtworks",
+      as: "artworks",
+    });
+  };
+
   return Artist;
 };

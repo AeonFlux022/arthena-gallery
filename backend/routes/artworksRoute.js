@@ -21,7 +21,7 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const { Artist, ArtistProfile, Artwork } = require("../models");
+const { Artist, ArtistProfile, Artwork, ArtistArtworks } = require("../models");
 
 // multer config
 const storage = multer.diskStorage({
@@ -79,6 +79,35 @@ router.post("/:artistId", upload.single("imageUrl"), async (req, res) => {
   } catch (error) {
     console.error("Error in creating artwork:", error);
     res.status(500).json({ error: "Failed to add artwork!" });
+  }
+});
+
+// GET ALL ARTWORKS BY ARTIST ID
+// GET ALL ARTWORKS BY ARTIST ID
+router.get("/all/byId/:artistId", async (req, res) => {
+  try {
+    const { artistId } = req.params;
+
+    const artist = await Artist.findOne({
+      where: { id: artistId },
+      include: [
+        {
+          model: Artwork,
+          as: "artworks",
+        },
+      ],
+    });
+
+    if (!artist) {
+      return res.status(404).json({ error: "Artist not found" });
+    }
+
+    const artworks = artist.artworks;
+
+    res.status(200).json({ artworks });
+  } catch (error) {
+    console.error("Error retrieving artworks by artist:", error);
+    res.status(500).json({ error: "Failed to retrieve artworks by artist" });
   }
 });
 

@@ -30,6 +30,22 @@ function AddArtwork() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Validate form fields
+    if (
+      !formData.title ||
+      !formData.imageUrl ||
+      !formData.medium ||
+      !formData.dimensions ||
+      !formData.description ||
+      !formData.price
+    ) {
+      setAlert({
+        type: "danger",
+        message: "Please fill in all the required fields.",
+      });
+      return;
+    }
+
     const formDataWithImage = new FormData();
     formDataWithImage.append("title", formData.title);
     formDataWithImage.append("imageUrl", formData.imageUrl);
@@ -45,6 +61,9 @@ function AddArtwork() {
       );
       console.log(response.data);
       setAlert({ type: "success", message: "Artwork submitted successfully." });
+      setTimeout(() => {
+        navigate(`/artistProfile/${id}`);
+      }, 2000);
     } catch (error) {
       setAlert({ type: "danger", message: "Failed to add artwork." });
       console.error(error);
