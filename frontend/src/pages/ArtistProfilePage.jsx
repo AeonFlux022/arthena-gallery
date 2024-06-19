@@ -12,6 +12,7 @@ function ArtistProfilePage() {
   const [artworkData, setArtworkData] = useState({});
   const { authState, setAuthState } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   // const [artistId, setArtistId] = useState(null);
 
   const fetchArtist = async () => {
@@ -55,6 +56,10 @@ function ArtistProfilePage() {
       fetchArtworks();
     }
   }, [authState.id]);
+
+  const handleEditArtwork = (artworkId) => {
+    navigate(`/editartwork/${artworkId}`);
+  };
 
   return (
     <>
@@ -116,7 +121,11 @@ function ArtistProfilePage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
                     {artworkData.map((artwork) => (
                       <>
-                        <div className="card w-full border border-primary">
+                        <div
+                          className="card w-full border border-primary"
+                          key={artwork.id}
+                          onClick={() => handleEditArtwork(artwork.id)}
+                        >
                           <img
                             className="card-image w-full h-48 object-cover"
                             src={

@@ -14,6 +14,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import ArtistProfilePage from "./pages/ArtistProfilePage.jsx";
 import EditArtist from "./pages/EditArtist.jsx";
 import AddArtwork from "./pages/AddArtwork.jsx";
+import EditArtwork from "./pages/EditArtwork.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -69,6 +70,11 @@ function App() {
           />
           <Route path="/editartist/:id" exact element={<EditArtist />} />
           <Route path="/artistprofile/:id/add" exact element={<AddArtwork />} />
+          <Route
+            path="/editartwork/:artworkId"
+            exact
+            element={<EditArtwork />}
+          />
         </Routes>
       </AuthContext.Provider>
     </>
