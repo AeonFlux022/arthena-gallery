@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .card {
   @apply cursor-pointer h-80 rounded-lg shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-300
 }

@@ -111,4 +111,25 @@ router.get("/all/byId/:artistId", async (req, res) => {
   }
 });
 
+// GET ARTWORK BY ID
+router.get("/byId/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const getArtwork = await Artwork.findOne({
+      where: { id },
+    });
+
+    if (!getArtwork) {
+      return res.status(404).send({ error: "Artwork not found" });
+    }
+
+    res.status(200).send(getArtwork);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .send({ error: "An error occurred while fetching the artwork" });
+  }
+});
+
 module.exports = router;

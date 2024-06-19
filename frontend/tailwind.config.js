@@ -5,6 +5,9 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  base: {
+    colors: "#0C0C0C",
+  },
   theme: {
     fontFamily: {
       display: ["Poppins", "sans-serif"],
