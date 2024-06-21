@@ -6,7 +6,7 @@ import axios from "axios";
 import Header from "../components/Header";
 import moment from "moment";
 
-function EditArtwork() {
+function ArtworkPage() {
   const { artworkId } = useParams();
   const { authState, setAuthState } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -78,4 +78,4 @@ function EditArtwork() {
   );
 }
 
-export default EditArtwork;
+export default ArtworkPage;

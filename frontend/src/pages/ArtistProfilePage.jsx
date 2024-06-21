@@ -58,7 +58,7 @@ function ArtistProfilePage() {
   }, [authState.id]);
 
   const handleEditArtwork = (artworkId) => {
-    navigate(`/editartwork/${artworkId}`);
+    navigate(`/artworkpage/${artworkId}`);
   };
 
   return (
