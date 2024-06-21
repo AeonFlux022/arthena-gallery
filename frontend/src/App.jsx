@@ -41,6 +41,8 @@ function App() {
             ...authState,
             status: false,
           });
+          localStorage.removeItem("accessToken");
+          navigate("/");
         } else {
           setAuthState({
             username: response.data.username,

@@ -39,10 +39,10 @@ function EditArtwork() {
       <Header />
       <div className="px-4 md:px-6 lg:px-8 my-5">
         <div className="flex justify-between items-center space-y-2 mb-2">
-          <h1 className="font-bold text-2xl">Artwork Details</h1>
-          <button className="w-44 text-white bg-primary p-2 hover:bg-primary-dark">
+          <h1 className="font-bold text-2xl">{artwork.title}</h1>
+          {/* <button className="w-44 text-white bg-primary p-2 hover:bg-primary-dark">
             Save Changes
-          </button>
+          </button> */}
         </div>
         <hr />
         <div className="flex gap-4 pt-8">
@@ -67,7 +67,7 @@ function EditArtwork() {
                 <ul className="space-y-3">
                   <li>{artwork.medium}</li>
                   <li>{artwork.dimensions}</li>
-                  <li>{artwork.price}</li>
+                  <li>&#8369; {artwork.price}</li>
                 </ul>
               </div>
             </div>

@@ -37,8 +37,8 @@ function Header() {
       status: false,
     });
     setTimeout(() => {
-      navigate("/login");
-    }, 1000);
+      navigate("/");
+    }, 0);
   };
 
   return (

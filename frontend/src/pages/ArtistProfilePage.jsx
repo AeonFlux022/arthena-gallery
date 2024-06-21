@@ -107,12 +107,12 @@ function ArtistProfilePage() {
             </Link>
           </div>
         </div>
-        <section className="my-5 h-44">
+        <section className="my-5 h-44 pt-4">
           <div className="font-bold text-xl space-y-3 mb-5">
             <h1>Artworks</h1>
             <hr />
           </div>
-          <div className="">
+          <div className="pt-4">
             {loading ? (
               <div>Loading...</div>
             ) : (
@@ -138,7 +138,7 @@ function ArtistProfilePage() {
                             <div className="flex flex-row justify-between">
                               <h1 className="font-bold">{artwork.title}</h1>
                               <span className="text-lg">
-                                &#8369;{artwork.price}
+                                &#8369; {artwork.price}
                               </span>
                             </div>
                             <div className="flex flex-col">
