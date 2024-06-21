@@ -104,7 +104,7 @@ function EditArtist() {
         <div className="flex justify-between items-center space-y-2 mb-2">
           <h1 className="font-bold text-2xl">Public Profile</h1>
           <button
-            className="w-32 text-white bg-primary p-2 hover:bg-primary-dark"
+            className="w-44 text-white bg-primary p-2 hover:bg-primary-dark"
             onClick={handleUpdate}
           >
             Save Profile
@@ -276,7 +276,7 @@ function EditArtist() {
                 <div className="relative">
                   <img
                     className="w-48 h-48 rounded-full mx-auto border-4 border-primary"
-                    src={ 
+                    src={
                       file
                         ? URL.createObjectURL(file)
                         : `http://localhost:3005/uploads/${artistProfile.image}` ||

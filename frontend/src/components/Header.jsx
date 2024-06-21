@@ -57,26 +57,26 @@ function Header() {
                   to="/"
                   className="flex hover:bg-secondary hover:text-black py-2 px-3"
                 >
-                  Home
+                  <span>Home</span>
                 </Link>
                 <Link
                   to="#"
                   className="flex hover:bg-secondary hover:text-black py-2 px-3"
                 >
-                  Gallery
+                  <span>Gallery</span>
                 </Link>
                 <Link
                   to="#"
                   className="flex hover:bg-secondary hover:text-black py-2 px-3"
                 >
-                  Artists
+                  <span>Artists</span>
                 </Link>
                 {authState.status && authState.role === "ARTIST" && (
                   <Link
                     to={`/artistprofile/${authState.id}`}
                     className="flex hover:bg-secondary hover:text-black py-2 px-3"
                   >
-                    My Profile
+                    <span>My Profile</span>
                   </Link>
                 )}
                 {authState.status ? (
@@ -89,7 +89,7 @@ function Header() {
                       type="button"
                       className="flex hover:bg-secondary hover:text-black py-2 px-3"
                     >
-                      Logout
+                      <span>Logout</span>
                     </Link>
                   </div>
                 ) : (
@@ -98,13 +98,13 @@ function Header() {
                       to="/signup"
                       className="flex hover:bg-secondary hover:text-black py-2 px-3"
                     >
-                      Signup
+                      <span>Signup</span>
                     </Link>
                     <Link
                       to="/login"
                       className="flex hover:bg-secondary hover:text-black py-2 px-3"
                     >
-                      Login
+                      <span>Login</span>
                     </Link>
                   </>
                 )}

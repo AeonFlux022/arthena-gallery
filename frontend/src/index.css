@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("https://api.fontshare.com/v2/css?f[]=poppins@400,600&display=swap");
+  }
+  a, button, label, input, textarea {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 300;
+    src: url("https://api.fontshare.com/v2/css?f[]=poppins@400,600&display=swap");
+  }
+  p, span, li {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("https://api.fontshare.com/v2/css?f[]=poppins@400,600&display=swap");
+  }
+}
+
 .card {
   @apply cursor-pointer h-80 rounded-lg shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-300
 }

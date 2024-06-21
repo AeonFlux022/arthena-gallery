@@ -40,7 +40,7 @@ function EditArtwork() {
       <div className="px-4 md:px-6 lg:px-8 my-5">
         <div className="flex justify-between items-center space-y-2 mb-2">
           <h1 className="font-bold text-2xl">Artwork Details</h1>
-          <button className="w-32 text-white bg-primary p-2 hover:bg-primary-dark">
+          <button className="w-44 text-white bg-primary p-2 hover:bg-primary-dark">
             Save Changes
           </button>
         </div>
@@ -54,7 +54,7 @@ function EditArtwork() {
           </div>
           <div className="flex flex-col w-1/2 h-44 p-4">
             <h1 className="font-bold text-lg">About the Artwork</h1>
-            <span className="font-extralight">{artwork.description}</span>
+            <span className="font-light">{artwork.description}</span>
             <div className="flex flex-row gap-2 pt-4">
               <div className="font-bold uppercase w-1/4">
                 <ul className="space-y-3">

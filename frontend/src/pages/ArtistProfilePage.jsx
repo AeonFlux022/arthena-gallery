@@ -88,7 +88,7 @@ function ArtistProfilePage() {
                 <span className="block">{artistProfile.email}</span>
               </div>
               <Link to={`/editartist/${authState.id}`}>
-                <button className="p-2 text-white bg-black w-32 hover:bg-gray-800">
+                <button className="p-2 text-white bg-black w-44 hover:bg-gray-800">
                   Edit Profile
                 </button>
               </Link>
