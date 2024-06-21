@@ -45,28 +45,29 @@ function EditArtwork() {
           </button>
         </div>
         <hr />
-        <div className="flex gap-4 pt-4">
+        <div className="flex gap-4 pt-8">
           <div className="flex bg-gray-100 w-1/2 h-3/4">
             <img
               className="justify-center items-center mx-auto h-full"
               src={`http://localhost:3005/uploads/${artwork.imageUrl}`}
             />
           </div>
-          <div className="flex flex-col w-1/2 h-44 p-4">
-            <h1 className="font-bold text-lg">About the Artwork</h1>
+          <div className="flex flex-col w-1/2 h-44 px-4 pb-4">
+            <h1 className="font-bold text-2xl">About the Artwork</h1>
             <span className="font-light">{artwork.description}</span>
-            <div className="flex flex-row gap-2 pt-4">
-              <div className="font-bold uppercase w-1/4">
+            <div className="flex flex-row gap-2 pt-8">
+              <div className="uppercase w-1/4">
                 <ul className="space-y-3">
                   <li>Medium</li>
                   <li>Dimensions</li>
-                  <li>Description</li>
                   <li>Price</li>
                 </ul>
               </div>
               <div className="w-1/2">
-                <ul>
+                <ul className="space-y-3">
                   <li>{artwork.medium}</li>
+                  <li>{artwork.dimensions}</li>
+                  <li>{artwork.price}</li>
                 </ul>
               </div>
             </div>
