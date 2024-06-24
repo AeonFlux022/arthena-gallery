@@ -159,7 +159,9 @@ function ArtistProfilePage() {
                               <span className="text-sm mb-3">
                                 {artwork.status}
                               </span>
-                              <span>{artwork.description}</span>
+                              <span className="truncate ...">
+                                {artwork.description}
+                              </span>
                             </div>
                           </div>
                         </div>

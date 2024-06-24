@@ -52,9 +52,11 @@ function ArtworkPage() {
               src={`http://localhost:3005/uploads/${artwork.imageUrl}`}
             />
           </div>
-          <div className="flex flex-col w-1/2 h-44 px-4 pb-4">
+          <div className="flex flex-col w-1/2 h-44 px-4 pb-4 space-y-3">
             <h1 className="font-bold text-2xl">About the Artwork</h1>
-            <span className="font-light">{artwork.description}</span>
+            <span className="font-light text-pretty">
+              {artwork.description}
+            </span>
             <div className="flex flex-row gap-2 pt-8">
               <div className="uppercase w-1/4">
                 <ul className="space-y-3">

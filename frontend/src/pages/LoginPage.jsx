@@ -51,7 +51,14 @@ function LoginPage() {
           role: response.data.role,
           status: true,
         });
-        navigate("/");
+        // Navigate based on the user's role
+        if (authState.role === 0) {
+          navigate("/admin");
+        } else if (authState.role === 1) {
+          navigate("/");
+        } else {
+          navigate("/");
+        }
       }
     } catch (error) {
       if (

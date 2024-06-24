@@ -28,7 +28,9 @@ function LandingPage() {
               </button>
             </div>
           </div>
-          <div className="w-1/2 bg-gray-100"></div>
+          <div className="w-1/2 bg-gray-100">
+            <img src="hero-image.jpg" className="h-full object-cover" />
+          </div>
         </div>
         <section className="container mx-auto h-auto my-20">
           <div className="container mx-auto w-3/4 lg:w-1/2 text-center mb-12">

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Artist, ArtistProfile } = require("../models");
+const { Artist, ArtistProfile, Admin } = require("../models");
 const bcrypt = require("bcrypt");
 const { validateToken } = require("../middlewares/AuthMiddleware.jsx");
 
@@ -8,8 +8,7 @@ const { sign } = require("jsonwebtoken");
 
 router.post("/login", async (req, res) => {
   try {
-    const { username, firstName, lastName, email, password, artistId } =
-      req.body;
+    const { username, email, password } = req.body;
 
     if (!username) {
       return res.status(400).json({ error: "Username is required" });
