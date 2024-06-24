@@ -43,7 +43,7 @@ function ArtistProfilePage() {
       );
       const responseData = await response.json();
       // console.log(responseData);
-      setArtworkData(responseData.artworks);
+      setArtworkData(responseData.artworks || []);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -61,14 +61,27 @@ function ArtistProfilePage() {
     navigate(`/artworkpage/${artworkId}`);
   };
 
+  const roleText = (role) => {
+    switch (role) {
+      case 0:
+        return "Admin";
+      case 1:
+        return "Artist";
+      case 2:
+        return "Buyer";
+      default:
+        return "Unknown";
+    }
+  };
+
   return (
     <>
       <Header />
       <div className="px-4 md:px-6 lg:px-8 my-5">
         <div className="flex bg-primary-light text-white rounded-br-lg rounded-tl-lg mb-5">
-          <div className="flex-shrink-0 p-4">
+          <div className="flex-shrink-0">
             <img
-              className="w-36 h-36 rounded-full"
+              className="w-52 h-full"
               src={`http://localhost:3005/uploads/${
                 artistProfile.image || "https://placehold.co/300x300"
               }`}
@@ -82,10 +95,11 @@ function ArtistProfilePage() {
           <div className="flex-grow p-5 pt-6">
             <div className="flex justify-between items-start">
               <div>
+                <span className="">{roleText(authState.role)}</span>
                 <h1 className="text-2xl font-bold">
                   {artistProfile.firstName}, {artistProfile.lastName}
                 </h1>
-                <span className="block">{artistProfile.email}</span>
+                <span className="">{artistProfile.email}</span>
               </div>
               <Link to={`/editartist/${authState.id}`}>
                 <button className="p-2 text-white bg-black w-44 hover:bg-gray-800">

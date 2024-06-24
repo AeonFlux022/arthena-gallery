@@ -9,13 +9,13 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
       },
       role: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: "ARTIST",
+        defaultValue: 1,
       },
       active: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: false, 
         defaultValue: false,
       },
     },

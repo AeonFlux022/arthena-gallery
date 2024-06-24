@@ -71,7 +71,7 @@ function Header() {
                 >
                   <span>Artists</span>
                 </Link>
-                {authState.status && authState.role === "ARTIST" && (
+                {authState.status && authState.role === 1 && (
                   <Link
                     to={`/artistprofile/${authState.id}`}
                     className="flex hover:bg-secondary hover:text-black py-2 px-3"

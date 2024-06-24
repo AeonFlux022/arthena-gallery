@@ -3,12 +3,14 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../helpers/AuthContext";
+// import { FuncContext } from "../helpers/FuncContext.js";
 import "../index.css";
 import axios from "axios";
 import Header from "../components/Header";
 import AlertNotification from "../components/AlertNotification.jsx";
 
 function AddArtwork() {
+  // const { CreateArtwork } = useContext(FuncContext);
   let { id } = useParams();
   const navigate = useNavigate();
   const { artworkData, setArtworkData } = useState({});
@@ -60,6 +62,9 @@ function AddArtwork() {
         formDataWithImage
       );
       console.log(response.data);
+
+      // const response = await CreateArtwork("artwork", id);
+
       setAlert({ type: "success", message: "Artwork submitted successfully." });
       setTimeout(() => {
         navigate(`/artistProfile/${id}`);

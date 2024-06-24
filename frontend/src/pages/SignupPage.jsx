@@ -241,7 +241,7 @@ function SignupPage() {
                         name="password"
                         onChange={handleChange}
                         value={formData.password}
-                        className="block w-full box-border p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                        className="block w-full box-border p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark focus:border-0"
                         placeholder="Password"
                       />
                     </div>
