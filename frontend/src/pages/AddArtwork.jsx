@@ -3,14 +3,13 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../helpers/AuthContext";
-// import { FuncContext } from "../helpers/FuncContext.js";
+import { FuncContext } from "../helpers/FuncContext";
 import "../index.css";
-import axios from "axios";
 import Header from "../components/Header";
 import AlertNotification from "../components/AlertNotification.jsx";
 
 function AddArtwork() {
-  // const { CreateArtwork } = useContext(FuncContext);
+  const { CreateArtwork } = useContext(FuncContext);
   let { id } = useParams();
   const navigate = useNavigate();
   const { artworkData, setArtworkData } = useState({});
@@ -29,7 +28,7 @@ function AddArtwork() {
     price: "",
   });
 
-  const handleSubmit = async (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     // Validate form fields
@@ -57,14 +56,14 @@ function AddArtwork() {
     formDataWithImage.append("price", formData.price);
 
     try {
-      const response = await axios.post(
-        `http://localhost:3005/artworks/${id}`,
-        formDataWithImage
-      );
-      console.log(response.data);
+      // const response = await axios.post(
+      //   `http://localhost:3005/artworks/${id}`,
+      //   formDataWithImage
+      // );
+      // console.log(response.data);
 
-      // const response = await CreateArtwork("artwork", id);
-
+      await CreateArtwork("artworks", id, formDataWithImage);
+      // console.log(id);
       setAlert({ type: "success", message: "Artwork submitted successfully." });
       setTimeout(() => {
         navigate(`/artistProfile/${id}`);
@@ -73,7 +72,7 @@ function AddArtwork() {
       setAlert({ type: "danger", message: "Failed to add artwork." });
       console.error(error);
     }
-  };
+  }
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;

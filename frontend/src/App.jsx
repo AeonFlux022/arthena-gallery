@@ -16,6 +16,7 @@ import EditArtist from "./pages/EditArtist.jsx";
 import AddArtwork from "./pages/AddArtwork.jsx";
 // import EditArtwork from "./pages/EditArtwork.jsx";
 import ArtworkPage from "./pages/ArtworkPage.jsx";
+import ArtistsPage from "./pages/ArtistsPage.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -66,6 +67,7 @@ function App() {
           <Route path="/admin" exact element={<Dashboard />} />
           <Route path="/signup" exact element={<SignupPage />} />
           <Route path="/login" exact element={<LoginPage />} />
+          <Route path="/artists" exact element={<ArtistsPage />} />
           <Route
             path="/artistprofile/:id"
             exact

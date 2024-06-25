@@ -1,12 +1,15 @@
 import { createContext } from "react";
+import axios from "axios";
 
-async function CreateArtwork({ url, id }) {
-  return await axios.post(
+async function CreateArtwork(url, id, formDataWithImage) {
+  // const [alert, setAlert] = useState(null);
+
+  const response = await axios.post(
     `http://localhost:3005/${url}/${id}`,
     formDataWithImage
   );
 
-  console.log(response.data);
+  return response;
 }
 
-export const FuncContext = createContext({ CreateArtwork, Alert });
+export const FuncContext = createContext({ CreateArtwork });

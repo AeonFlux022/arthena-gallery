@@ -66,7 +66,7 @@ function Header() {
                   <span>Gallery</span>
                 </Link>
                 <Link
-                  to="#"
+                  to="/artists"
                   className="flex hover:bg-secondary hover:text-black py-2 px-3"
                 >
                   <span>Artists</span>
