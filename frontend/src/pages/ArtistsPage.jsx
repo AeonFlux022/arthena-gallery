@@ -6,12 +6,15 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "../index.css";
 import axios from "axios";
 import Header from "../components/Header";
+import SearchBar from "../components/SearchBar";
 import moment from "moment";
 
 function ArtistsPage() {
   const [allArtists, setAllArtists] = useState({});
   // const [artworks, setArtworks] = useState({});
   const [artworksByArtist, setArtworksByArtist] = useState({});
+  const [filteredArtists, setFilteredArtists] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const fetchArtists = async () => {
     try {
@@ -43,6 +46,27 @@ function ArtistsPage() {
     fetchArtists();
   }, []);
 
+  const handleSearch = (searchTerm) => {
+    if (searchTerm.trim() === "") {
+      setFilteredArtists([]);
+      setShowSuggestions(false);
+    } else {
+      const filtered = Object.values(allArtists).filter((artist) =>
+        `${artist.firstName} ${artist.lastName}`
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      );
+
+      if (filtered.length === 0) {
+        setFilteredArtists([]);
+        setShowSuggestions(false);
+      } else {
+        setFilteredArtists(filtered);
+        setShowSuggestions(true);
+      }
+    }
+  };
+
   return (
     <>
       <Header />
@@ -52,17 +76,21 @@ function ArtistsPage() {
           <hr />
           <div className="flex flex-row justify-between items-center">
             <div className="w-1/3">
-              <div className="my-2 relative">
-                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <FontAwesomeIcon icon={faSearch} className="text-gray-500" />
+              <SearchBar onSearch={handleSearch} />
+              {showSuggestions && (
+                <div className="bg-neutral border border-t-0 shadow-lg p-3">
+                  {filteredArtists.map((artist) => (
+                    <div key={artist.id} className="">
+                      <Link
+                        to={`/artists/${artist.id}`}
+                        className="font-semibold"
+                      >
+                        {artist.firstName} {artist.lastName}
+                      </Link>
+                    </div>
+                  ))}
                 </div>
-                <input
-                  type="text"
-                  name="search"
-                  className="flex-1 w-full border-box p-2.5 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400"
-                  placeholder="Search for an artist"
-                />
-              </div>
+              )}
             </div>
             <div>
               <span>Sort By</span>
@@ -87,9 +115,11 @@ function ArtistsPage() {
                     <span className="text-gray-600 text-sm">
                       {artist.address}
                     </span>
-                    <button className="mt-5 w-full items-end mx-auto text-white bg-primary p-2 hover:bg-primary-dark">
-                      View Profile
-                    </button>
+                    <Link to="">
+                      <button className="mt-5 w-full items-end mx-auto text-white bg-primary p-2 hover:bg-primary-dark">
+                        View Profile
+                      </button>
+                    </Link>
                   </div>
                 </div>
                 <div className="w-full p-5">
