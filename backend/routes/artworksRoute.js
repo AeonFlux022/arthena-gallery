@@ -84,6 +84,10 @@ router.post("/:artistId", upload.single("imageUrl"), async (req, res) => {
 
 // GET ALL ARTWORKS BY ARTIST ID
 // GET ALL ARTWORKS BY ARTIST ID
+// GET ALL ARTWORKS BY ARTIST ID
+// GET ALL ARTWORKS BY ARTIST ID
+// GET ALL ARTWORKS BY ARTIST ID
+// GET ALL ARTWORKS BY ARTIST ID
 router.get("/all/byId/:artistId", async (req, res) => {
   try {
     const { artistId } = req.params;
