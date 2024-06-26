@@ -11,6 +11,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Routes
+const adminRoute = require("./routes/adminsRoute.js");
+app.use("/admins", adminRoute);
+
 const artistRoute = require("./routes/artistsRoute.js");
 app.use("/artists", artistRoute);
 
