@@ -1,42 +1,42 @@
 const ROLE = require("./../const/roleConstants.js");
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    "User",
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      role: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: ROLE.ARTIST, // Default role
-        validate: {
-          isIn: [[ROLE.ADMIN, ROLE.ARTIST, ROLE.BUYER, ROLE.GUEST]],
+    const User = sequelize.define(
+      "User",
+      {
+        id: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+        },
+        role: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          defaultValue: ROLE.ARTIST, // Default role
+          validate: {
+            isIn: [[ROLE.ADMIN, ROLE.ARTIST, ROLE.BUYER, ROLE.GUEST]],
+          },
+        },
+        active: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false, 
+          defaultValue: false,
         },
       },
-      active: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-      },
-    },
-    {
-      timestamps: false,
-      freezeTableName: true,
-    }
-  );
-
-  // User.associate = (models) => {
-  //   User.hasOne(models.UserProfile, {
-  //     foreignKey: "userId",
-  //     as: "userProfile",
-  //     onDelete: "CASCADE",
-  //   });
-  // };
+      {
+        timestamps: false,
+        freezeTableName: true,
+      }
+    );
+  
+    // User.associate = (models) => {
+    //   User.hasOne(models.UserProfile, {
+    //     foreignKey: "userId",
+    //     as: "userProfile",
+    //     onDelete: "CASCADE",
+    //   });
+    // };
 
   User.associate = (models) => {
     User.hasOne(models.AdminProfile, {

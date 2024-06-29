@@ -179,4 +179,27 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
   }
 });
 
+// DEACTIVATE ACCOUNT
+router.delete('/deactivate/:id', async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const user = await User.findByPk(id)
+
+    if(!user) {
+      return res.status(404).send({ err: "Artist not found!"})
+    }
+
+    user.active = false
+    await user.save();
+
+    res.status(200).json({
+      message: "Artist account deactivated successfully!"
+    })
+  } catch (err) {
+    console.error("Error deactivating user:", err);
+    res.status(500).json({ error: "Failed to deactivate user. Please try again later." });
+  }
+})
+
 module.exports = router;
