@@ -8,7 +8,7 @@ const { sign } = require("jsonwebtoken");
 
 router.post("/login", async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
 
     if (!username) {
       return res.status(400).json({ error: "Username is required" });
@@ -68,7 +68,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/admin/login", async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
 
     if (!username) {
       return res.status(400).json({ error: "Username or email is required" });
@@ -86,9 +86,7 @@ router.post("/admin/login", async (req, res) => {
       return;
     }
 
-    const passwordMatch = await bcrypt.compare(
-      password,
-      adminProfile.password)
+    const passwordMatch = await bcrypt.compare(password, adminProfile.password);
 
     if (!passwordMatch) {
       res.status(401).json({ error: "Incorrect password. Please try again." });
