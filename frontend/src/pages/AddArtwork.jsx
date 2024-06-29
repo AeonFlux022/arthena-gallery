@@ -74,8 +74,32 @@ function AddArtwork() {
     }
   }
 
+  // const handleChange = (event) => {
+  //   const { name, value, files } = event.target;
+  //   if (files) {
+  //     const file = files[0];
+  //     setFile(file);
+  //     setFormData((prevFormData) => ({
+  //       ...prevFormData,
+  //       [name]: files[0], // Store the file name, not the file object
+  //     }));
+  //   } else {
+  //     setFormData((prevFormData) => ({
+  //       ...prevFormData,
+  //       [name]: value,
+  //       dimensions:
+  //         name === "width" || name === "height" || name === "depth"
+  //           ? `${prevFormData[name].toFixed(1)} x ${prevFormData.height.toFixed(
+  //               1
+  //             )} x ${prevFormData.depth.toFixed(1)} (in inches)`
+  //           : prevFormData.dimensions,
+  //     }));
+  //   }
+  // };
+
   const handleChange = (event) => {
     const { name, value, files } = event.target;
+
     if (files) {
       const file = files[0];
       setFile(file);
@@ -84,10 +108,37 @@ function AddArtwork() {
         [name]: files[0], // Store the file name, not the file object
       }));
     } else {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: value,
-      }));
+      setFormData((prevFormData) => {
+        let width = prevFormData.width || 0;
+        let height = prevFormData.height || 0;
+        let depth = prevFormData.depth || 0;
+
+        if (name === "width") {
+          width = parseFloat(value);
+        } else if (name === "height") {
+          height = parseFloat(value);
+        } else if (name === "depth") {
+          depth = parseFloat(value);
+        } else {
+          // Handle other form fields
+          return {
+            ...prevFormData,
+            [name]: value,
+          };
+        }
+
+        const dimensions = `${width.toFixed(1)} x ${height.toFixed(
+          1
+        )} x ${depth.toFixed(1)} (in inches)`;
+
+        return {
+          ...prevFormData,
+          width,
+          height,
+          depth,
+          dimensions,
+        };
+      });
     }
   };
 
@@ -129,6 +180,58 @@ function AddArtwork() {
                   <label className="block text-sm font-medium leading-6">
                     Dimensions
                   </label>
+                  <span className="text-sm text-gray-500 mb-2">
+                    Sizes must be in inches.
+                  </span>
+                  <div className="flex space-x-4 my-2">
+                    <div className="w-full">
+                      <input
+                        type="number"
+                        name="width"
+                        className="w-full border-box p-2.5 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400"
+                        placeholder="Width"
+                        value={formData.width}
+                        onChange={(e) => {
+                          handleChange({
+                            target: { name: "width", value: e.target.value },
+                          });
+                        }}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <input
+                        type="number"
+                        name="height"
+                        className="w-full border-box p-2.5 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400"
+                        placeholder="Height"
+                        value={formData.height}
+                        onChange={(e) => {
+                          handleChange({
+                            target: { name: "height", value: e.target.value },
+                          });
+                        }}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <input
+                        type="number"
+                        name="depth"
+                        className="w-full border-box p-2.5 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400"
+                        placeholder="Depth"
+                        value={formData.depth}
+                        onChange={(e) => {
+                          handleChange({
+                            target: { name: "depth", value: e.target.value },
+                          });
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/* <div className="w-full">
+                  <label className="block text-sm font-medium leading-6">
+                    Dimensions
+                  </label>
                   <div className="my-2">
                     <input
                       type="text"
@@ -139,7 +242,7 @@ function AddArtwork() {
                       onChange={handleChange}
                     />
                   </div>
-                </div>
+                </div> */}
                 <div className="w-full">
                   <label className="block text-sm font-medium leading-6">
                     Medium

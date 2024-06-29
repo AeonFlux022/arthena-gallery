@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { AuthContext } from "./helpers/AuthContext";
+import { AuthContext } from "./helpers/AuthContext.js";
 import axios from "axios";
 import "./App.css";
 
@@ -29,6 +29,48 @@ function App() {
     role: "",
     status: false,
   });
+
+  // check if may unod and authState if may ara wala lamg, if wala e set
+  // useEffect(() => {
+  //   const accessToken = localStorage.getItem("accessToken");
+  //   if (accessToken) {
+  //     axios
+  //       .get("http://localhost:3005/auth/auth", {
+  //         headers: {
+  //           accessToken: localStorage.getItem("accessToken"),
+  //         },
+  //       })
+  //       .then((response) => {
+  //         if (!response.data.error) {
+  //           setAuthState({
+  //             username: response.data.username,
+  //             email: response.data.email,
+  //             firstName: response.data.firstName,
+  //             lastName: response.data.lastName,
+  //             id: response.data.id,
+  //             role: response.data.role,
+  //             status: true,
+  //           });
+  //         } else {
+  //           setAuthState({
+  //             ...authState,
+  //             status: false,
+  //           });
+  //           localStorage.removeItem("accessToken");
+  //           navigate("/");
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching authentication data:", error);
+  //         setAuthState({
+  //           ...authState,
+  //           status: false,
+  //         });
+  //         localStorage.removeItem("accessToken");
+  //         navigate("/");
+  //       });
+  //   }
+  // }, []);
 
   useEffect(() => {
     axios

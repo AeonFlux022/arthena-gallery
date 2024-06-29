@@ -8,23 +8,6 @@ function Header() {
   const { authState, setAuthState } = useContext(AuthContext);
   const [artistProfile, setArtistProfile] = useState({});
 
-  const fetchArtist = async () => {
-    try {
-      // Fetch the artist profile data
-      const profileResponse = await fetch(
-        `http://localhost:3005/artists/byId/${authState.id}`
-      );
-      const profileData = await profileResponse.json();
-      setArtistProfile(profileData);
-    } catch (error) {
-      console.error("Error fetching user and artist data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchArtist(authState.id);
-  }, [authState.id]);
-
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     setAuthState({
@@ -82,7 +65,7 @@ function Header() {
                 {authState.status ? (
                   <div className="flex items-center">
                     <span className="flex py-2 px-3 font-bold">
-                      Hello, {authState.firstName}!
+                      Hello, {authState.firstName} !
                     </span>
                     <Link
                       onClick={handleLogout}

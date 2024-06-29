@@ -1,4 +1,4 @@
-const ROLE = require('./../const/roleConstants.js')
+const ROLE = require("./../const/roleConstants.js");
 
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define(
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         active: {
           type: DataTypes.BOOLEAN,
           allowNull: false, 
-          defaultValue: true,
+          defaultValue: false,
         },
       },
       {
@@ -38,34 +38,34 @@ module.exports = (sequelize, DataTypes) => {
     //   });
     // };
 
-    User.associate = (models) => {
-        User.hasOne(models.AdminProfile, {
-          foreignKey: 'userId',
-          as: 'adminProfile',
-          onDelete: 'CASCADE',
-          constraints: false, // Disable constraints to allow multiple associations
-        });
-    
-        User.hasOne(models.ArtistProfile, {
-          foreignKey: 'userId',
-          as: 'artistProfile',
-          onDelete: 'CASCADE',
-          constraints: false,
-        });
+  User.associate = (models) => {
+    User.hasOne(models.AdminProfile, {
+      foreignKey: "userId",
+      as: "adminProfile",
+      onDelete: "CASCADE",
+      constraints: false, // Disable constraints to allow multiple associations
+    });
 
-        // User.hasMany(models.Artwork, {
-        //     foreignKey: 'userId',
-        //     as: 'artworks',
-        //     onDelete: 'CASCADE',
-        // });
+    User.hasOne(models.ArtistProfile, {
+      foreignKey: "userId",
+      as: "artistProfile",
+      onDelete: "CASCADE",
+      constraints: false,
+    });
 
-        User.belongsToMany(models.Artwork, {
-            through: models.Artist_Artworks,
-            foreignKey: "userId",
-            otherKey: "artworkId",
-            as: "artworks",
-          });
-      };
-  
-    return User;
+    // User.hasMany(models.Artwork, {
+    //     foreignKey: 'userId',
+    //     as: 'artworks',
+    //     onDelete: 'CASCADE',
+    // });
+
+    User.belongsToMany(models.Artwork, {
+      through: models.Artist_Artworks,
+      foreignKey: "userId",
+      otherKey: "artworkId",
+      as: "artworks",
+    });
   };
+
+  return User;
+};
