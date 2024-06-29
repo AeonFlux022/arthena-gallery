@@ -8,23 +8,6 @@ function Header() {
   const { authState, setAuthState } = useContext(AuthContext);
   const [artistProfile, setArtistProfile] = useState({});
 
-  // const fetchArtist = async () => {
-  //   try {
-  //     // Fetch the artist profile data
-  //     const profileResponse = await fetch(
-  //       `http://localhost:3005/artists/byId/${authState.id}`
-  //     );
-  //     const profileData = await profileResponse.json();
-  //     setArtistProfile(profileData);
-  //   } catch (error) {
-  //     console.error("Error fetching user and artist data:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchArtist();
-  // }, []);
-
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     setAuthState({
@@ -40,12 +23,6 @@ function Header() {
       navigate("/");
     }, 0);
   };
-
-  useEffect(() => {
-    console.log("authState before storing:", authState);
-    localStorage.setItem("authState", JSON.stringify(authState));
-    console.log("authState after storing:", authState);
-  }, [authState]);
 
   return (
     <>

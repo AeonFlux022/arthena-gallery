@@ -1,4 +1,5 @@
 const express = require("express");
+// require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const app = express();
@@ -29,14 +30,14 @@ db.sequelize.sync().then(() => {
   });
 });
 
-// // WIPING ALL DB WHILE DISABLING FOREIGN KEY CHECKS
+// WIPING ALL DB WHILE DISABLING FOREIGN KEY CHECKS
 // (async () => {
 //   try {
-//     await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
+//     await db.sequelize.query("SET FOREIGN_KEY_CHECKS = 0");
 
 //     await db.sequelize.drop();
 
-//     await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
+//     await db.sequelize.query("SET FOREIGN_KEY_CHECKS = 1");
 
 //     await db.sequelize.sync({ force: true });
 

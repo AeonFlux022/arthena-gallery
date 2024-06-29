@@ -78,7 +78,95 @@ function ArtistProfilePage() {
     <>
       <Header />
       <div className="px-4 md:px-6 lg:px-8 my-5">
-        <div className="flex bg-primary-light text-white rounded-br-lg rounded-tl-lg mb-5">
+        <div className="flex flex-row gap-5 mb-5">
+          <div className="flex flex-col w-1/4 h-screen rounded-lg text-center bg-primary p-5">
+            <img
+              className="rounded-full size-36 mx-auto items-center justify-center mb-5"
+              src={`http://localhost:3005/uploads/${
+                artistProfile.image || "https://placehold.co/300x300"
+              }`}
+              alt="Avatar"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "https://placehold.co/300x300";
+              }}
+            />
+            <h1 className="text-xl">
+              {artistProfile.firstName} {artistProfile.lastName}
+            </h1>
+            <span className="text-sm">{artistProfile.email}</span>
+            <section className=" flex flex-col h-96 justify-between mt-5">
+              <div>
+                <span>{artistProfile.address}</span>
+                <span>{artistProfile.birthday}</span>
+              </div>
+              <div className="flex flex-col justify-end">
+                <Link to={`/editartist/${authState.id}`}>
+                  <button className="p-2 text-white bg-black w-44 hover:bg-gray-800">
+                    Edit Profile
+                  </button>
+                </Link>
+              </div>
+            </section>
+          </div>
+          <div className="flex w-3/4">
+            <section className="">
+              <div className="font-bold text-xl space-y-3 mb-3">
+                <h1>Artworks</h1>
+              </div>
+              <hr />
+              <div className="pt-4">
+                {loading ? (
+                  <div>Loading...</div>
+                ) : (
+                  <div className="mb-3">
+                    {artworkData.length > 0 ? (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+                        {artworkData.map((artwork) => (
+                          <>
+                            <div
+                              className="card w-full border border-primary"
+                              key={artwork.id}
+                              onClick={() => handleEditArtwork(artwork.id)}
+                            >
+                              <img
+                                className="card-image w-full h-48 object-cover"
+                                src={
+                                  artwork.imageUrl
+                                    ? `http://localhost:3005/uploads/${artwork.imageUrl}`
+                                    : "https://placeholder.com/500x300"
+                                }
+                              />
+                              <div className="card-body">
+                                <div className="flex flex-row justify-between">
+                                  <h1 className="font-bold">{artwork.title}</h1>
+                                  <span className="text-lg">
+                                    &#8369; {artwork.price}
+                                  </span>
+                                </div>
+                                <div className="flex flex-col">
+                                  <span className="text-sm mb-3">
+                                    {artwork.status}
+                                  </span>
+                                  <span className="truncate ...">
+                                    {artwork.description}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        ))}
+                      </div>
+                    ) : (
+                      <div>No artworks found.</div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </section>
+          </div>
+        </div>
+        {/* <div className="flex bg-primary-light text-white rounded-br-lg rounded-tl-lg mb-5">
           <div className="flex-shrink-0">
             <img
               className="w-52 h-full"
@@ -111,17 +199,17 @@ function ArtistProfilePage() {
               {artistProfile.bio}
             </blockquote>
           </div>
-        </div>
+        </div> */}
         <div className="flex">
           <div className="flex flex-col bg-gray-200 border border-primary rounded p-2 h-24 w-full justify-center items-center text-center">
             <Link to={`/artistprofile/${authState.id}/add`}>
               <button className="w-56 p-3 bg-secondary text-black font-bold hover:bg-secondary-dark">
-                Submit your artwork
+                Add your artwork
               </button>
             </Link>
           </div>
         </div>
-        <section className="my-5 h-44 pt-4">
+        {/* <section className="my-5 h-44 pt-4">
           <div className="font-bold text-xl space-y-3 mb-5">
             <h1>Artworks</h1>
             <hr />
@@ -174,7 +262,7 @@ function ArtistProfilePage() {
               </div>
             )}
           </div>
-        </section>
+        </section> */}
       </div>
     </>
   );
