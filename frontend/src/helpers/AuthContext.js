@@ -7,6 +7,6 @@ export const AuthContext = createContext({
   email: "",
   firstName: "",
   lastName: "",
-  role: "",
+  role: null,
   status: false,
 });

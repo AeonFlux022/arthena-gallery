@@ -6,6 +6,7 @@ import { AuthContext } from "../helpers/AuthContext";
 function Header() {
   const navigate = useNavigate();
   const { authState, setAuthState } = useContext(AuthContext);
+  console.log(authState);
   const [artistProfile, setArtistProfile] = useState({});
 
   const handleLogout = () => {
@@ -16,7 +17,7 @@ function Header() {
       firstName: "",
       lastName: "",
       id: 0,
-      role: "",
+      role: null,
       status: false,
     });
     setTimeout(() => {
