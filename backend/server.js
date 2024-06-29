@@ -29,13 +29,21 @@ db.sequelize.sync().then(() => {
   });
 });
 
-// const PORT = process.env.PORT || 3005;
-// db.sequelize.sync().then(() => {
-//   app.listen(PORT, () => {
-//     console.log(`Server is running on port ${PORT}`);
-//   });
-// });
+// // WIPING ALL DB WHILE DISABLING FOREIGN KEY CHECKS
+// (async () => {
+//   try {
+//     await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+//     await db.sequelize.drop();
+
+//     await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
+
+//     await db.sequelize.sync({ force: true });
+
+//     app.listen(3005, () => {
+//       console.log("Server running on port 3005");
+//     });
+//   } catch (error) {
+//     console.error("Error during table synchronization:", error);
+//   }
+// })();

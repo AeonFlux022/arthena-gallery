@@ -40,10 +40,17 @@ module.exports = (sequelize, DataTypes) => {
       }
     );
   
+    // AdminProfile.associate = (models) => {
+    //   AdminProfile.belongsTo(models.Admin, {
+    //     foreignKey: "adminId",
+    //     as: "admin",
+    //   });
+    // };
+
     AdminProfile.associate = (models) => {
-      AdminProfile.belongsTo(models.Admin, {
-        foreignKey: "adminId",
-        as: "admin",
+      AdminProfile.belongsTo(models.User, {
+        foreignKey: "userId",
+        as: "user",
       });
     };
   

@@ -60,10 +60,17 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  // ArtistProfile.associate = (models) => {
+  //   ArtistProfile.belongsTo(models.Artist, {
+  //     foreignKey: "artistId",
+  //     as: "artist",
+  //   });
+  // };
+
   ArtistProfile.associate = (models) => {
-    ArtistProfile.belongsTo(models.Artist, {
-      foreignKey: "artistId",
-      as: "artist",
+    ArtistProfile.belongsTo(models.User, {
+      foreignKey: "userId",
+      as: "user",
     });
   };
 

@@ -1,27 +1,10 @@
-// const artworksController = require('../controllers/artworksController.js')
-// const express = require('express')
-// const router = express.Router()
-
-// router.post('/:artistId/addArtwork', artworksController.addArtwork)
-
-// router.get('/allArtworks', artworksController.getAllArtworks)
-
-// router.get('/:artistId/artworks', artworksController.getArtworksByArtist)
-
-// router.patch('/update/:id', artworksController.updateArtwork)
-
-// router.delete('/delete/:id', artworksController.deleteArtwork)
-
-// module.exports = router
-
-// --------------------------------------------------------------
 // STRUCTURE NI KEVIN
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const { Artist, ArtistProfile, Artwork, ArtistArtworks } = require("../models");
+const { User, Artwork } = require("../models");
 
 // multer config
 const storage = multer.diskStorage({
@@ -40,7 +23,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // ADD ARTWORK
-router.post("/:artistId", upload.single("imageUrl"), async (req, res) => {
+router.post("/:userId", upload.single("imageUrl"), async (req, res) => {
   try {
     const {
       title,
@@ -51,12 +34,12 @@ router.post("/:artistId", upload.single("imageUrl"), async (req, res) => {
       medium,
       status,
     } = req.body;
-    const artistId = req.params.artistId;
+    const userId = req.params.userId;
     const imageUrl = req.file ? req.file.filename : null;
 
-    const artist = await Artist.findOne({ where: { id: artistId } });
-    if (!artist) {
-      return res.status(404).json({ error: "Artist not found" });
+    const user = await User.findOne({ where: { id: userId } });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
 
     const newArtwork = await Artwork.create({
@@ -70,12 +53,14 @@ router.post("/:artistId", upload.single("imageUrl"), async (req, res) => {
       status,
     });
 
-    // Associate the new Artwork with the Artist
-    await newArtwork.addArtist(artist);
+    // // Associate the new Artwork with the Artist
+    // await newArtwork.addArtist(user);
 
-    res
-      .status(201)
-      .json({ message: "Artwork added successfully!", data: { newArtwork } });
+    await user.addArtwork(newArtwork)
+
+    res.status(201).json({ 
+      message: "Artwork added successfully!",
+      data: { newArtwork } });
   } catch (error) {
     console.error("Error in creating artwork:", error);
     res.status(500).json({ error: "Failed to add artwork!" });
@@ -83,17 +68,12 @@ router.post("/:artistId", upload.single("imageUrl"), async (req, res) => {
 });
 
 // GET ALL ARTWORKS BY ARTIST ID
-// GET ALL ARTWORKS BY ARTIST ID
-// GET ALL ARTWORKS BY ARTIST ID
-// GET ALL ARTWORKS BY ARTIST ID
-// GET ALL ARTWORKS BY ARTIST ID
-// GET ALL ARTWORKS BY ARTIST ID
-router.get("/all/byId/:artistId", async (req, res) => {
+router.get("/all/byId/:userId", async (req, res) => {
   try {
-    const { artistId } = req.params;
+    const { userId } = req.params;
 
-    const artist = await Artist.findOne({
-      where: { id: artistId },
+    const user = await User.findOne({
+      where: { id: userId },
       include: [
         {
           model: Artwork,
@@ -102,11 +82,11 @@ router.get("/all/byId/:artistId", async (req, res) => {
       ],
     });
 
-    if (!artist) {
-      return res.status(404).json({ error: "Artist not found" });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
 
-    const artworks = artist.artworks;
+    const artworks = user.artworks;
 
     res.status(200).json({ artworks });
   } catch (error) {

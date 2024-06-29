@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const { Admin, AdminProfile } = require("../models");
+const { User, AdminProfile } = require("../models");
 const bcrypt = require("bcrypt");
 const saltRounds = bcrypt.genSaltSync(10);
 
@@ -30,7 +30,6 @@ const secretKey = require("../config/secretKey.js");
 router.post("/", async (req, res) => {
   try {
     const {
-      role,
       firstName,
       middleName,
       lastName,
@@ -46,7 +45,7 @@ router.post("/", async (req, res) => {
     //   address,
     } = req.body;
 
-    const newAdmin = await Admin.create({ role });
+    const newAdmin = await User.create({ role: 0 });
 
     if (!firstName || !lastName || !username || !email || !password) {
       return res.status(400).send("Missing required fields for AdminProfile");
@@ -55,7 +54,7 @@ router.post("/", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const newAdminProfile = await AdminProfile.create({
-      adminId: newAdmin.id,
+      userId: newAdmin.id,
       firstName,
       middleName,
       lastName,
@@ -86,6 +85,9 @@ router.post("/", async (req, res) => {
 // GET ALL USERS
 router.get("/", async (req, res) => {
   const allAdmins = await AdminProfile.findAll({
+    // where: {
+    //   role: 0
+    // },
     // include: [
     //   {
     //     model: AdminProfile,
@@ -139,7 +141,6 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     // birthdate,
     // age,
     // address,
-    // image: imageName,
   } = req.body;
   const image = req.file ? req.file.filename : null;
 
@@ -162,12 +163,6 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     // adminProfile.birthdate = birthdate;
     // adminProfile.age = age;
     // adminProfile.address = address;
-
-    // if (req.file) {
-    //   adminProfile.image = req.file.filename; // Store the file name, not the file object
-    // } else if (imageName) {
-    //   adminProfile.image = imageName; // Use the provided image name
-    // }
 
     if (image) {
         adminProfile.image = image;

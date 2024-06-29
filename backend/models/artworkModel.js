@@ -63,9 +63,11 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Artwork.associate = (models) => {
-    Artwork.belongsToMany(models.Artist, {
-      through: "artistArtworks",
-      as: "artists",
+    Artwork.belongsToMany(models.User, {
+      through: "artist_artworks",
+      as: "users",
+      foreignKey: "artworkId",
+      otherKey: "userId",
     });
   };
 

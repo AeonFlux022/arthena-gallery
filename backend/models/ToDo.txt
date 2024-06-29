@@ -1,0 +1,23 @@
+1. Merge creation of users (?) No need
+
+2. Check artworks functionalities (since entities changed)
+
+FIELDS TO ADD
+
+1. artstyle
+2. Type of artist (?)
+
+
+ARTWORK
+3. Categories (?)
+4. Artforms (enum)
+- Painting
+-Drawing
+-Print
+-Sculpture
+5. Year made
+6. Orientation (enum)
+- Portrait
+- Landscape
+- Square
+- Irregular
