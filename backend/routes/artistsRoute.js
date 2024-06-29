@@ -1,36 +1,9 @@
-// const artistsController = require("../controllers/artistsController.js");
-// const express = require("express");
-// const router = express.Router();
-
-// router.post("/addArtist", artistsController.addArtistWithProfile);
-
-// router.get("/allArtists", artistsController.getAllArtists);
-
-// router.post("/login", artistsController.loginArtist);
-
-// router.get(
-//   "/authenticated",
-//   artistsController.getAuthArtist
-//   // artistsController.authenticateToken
-// );
-
-// // Wild cards
-// router.get("/:id", artistsController.getOneArtist);
-
-// router.patch("/update/:id", artistsController.updateArtist);
-
-// router.delete("/delete/:id", artistsController.deleteArtist);
-
-// module.exports = router;
-
-// -------------------------------------------
-// STRUCTURE NI KEVIN //
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const { Artist, ArtistProfile } = require("../models");
+const { User, ArtistProfile } = require("../models");
 const bcrypt = require("bcrypt");
 const saltRounds = bcrypt.genSaltSync(10);
 
@@ -49,9 +22,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-
-// Secret key
-const secretKey = require("../config/secretKey.js");
 
 // CREATE A USER
 router.post("/", async (req, res) => {
@@ -73,7 +43,7 @@ router.post("/", async (req, res) => {
       image,
     } = req.body;
 
-    const newArtist = await Artist.create({ role });
+    const newArtist = await User.create({ role });
 
     if (!firstName || !lastName || !username || !email || !password) {
       return res.status(400).send("Missing required fields for ArtistProfile");
@@ -82,7 +52,7 @@ router.post("/", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const newArtistProfile = await ArtistProfile.create({
-      artistId: newArtist.id,
+      userId: newArtist.id,
       firstName,
       middleName,
       lastName,
@@ -110,29 +80,34 @@ router.post("/", async (req, res) => {
   }
 });
 
-// GET ALL USERS
+// GET ALL ARTISTS
 router.get("/", async (req, res) => {
   const allArtists = await ArtistProfile.findAll({
+    // where: {
+    //   role: 1
+    // },
     // include: [
     //   {
     //     model: ArtistProfile,
-    //     as: "artistprofile",
+    //     as: "artistProfile",
     //   },
     // ],
   });
   res.json(allArtists);
 });
 
-// GET ONE USER
+// GET ONE ARTIST PROFILE
 router.get("/byId/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const getArtist = await ArtistProfile.findOne({
-      where: { id },
+    const getArtist = await ArtistProfile.findOne({ // User.fineOne
+      where: {
+        id
+      },
       // include: [
       //   {
       //     model: ArtistProfile,
-      //     as: "artistprofile",
+      //     as: "artistProfile",
       //   },
       // ],
     });
@@ -152,7 +127,7 @@ router.get("/byId/:id", async (req, res) => {
 
 // UPDATE USER
 router.put("/update/:id", upload.single("image"), async (req, res) => {
-  const artistId = req.params.id;
+  const id = req.params.id;
   const {
     firstName,
     middleName,
@@ -172,12 +147,13 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
 
   try {
     const artistProfile = await ArtistProfile.findOne({
-      where: { artistId },
+      where: { id },
     });
 
     if (!artistProfile) {
       return res.status(404).json({ error: "Artist not found." });
     }
+    
     artistProfile.firstName = firstName;
     artistProfile.middleName = middleName;
     artistProfile.lastName = lastName;
@@ -190,15 +166,22 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     artistProfile.age = age;
     artistProfile.address = address;
 
-    // if (req.file) {
-    //   artistProfile.image = req.file.filename; // Store the file name, not the file object
-    // } else if (imageName) {
-    //   artistProfile.image = imageName; // Use the provided image name
-    // }
-
     if (image) {
       artistProfile.image = image;
     }
+
+    // // UPDATED validation due to required field errors 'email' and 'address'
+    // if (firstName !== undefined) artistProfile.firstName = firstName;
+    // if (middleName !== undefined) artistProfile.middleName = middleName;
+    // if (lastName !== undefined) artistProfile.lastName = lastName;
+    // if (email !== undefined) artistProfile.email = email;
+    // if (bio !== undefined) artistProfile.bio = bio;
+    // if (phoneNumber !== undefined) artistProfile.phoneNumber = phoneNumber;
+    // if (gender !== undefined) artistProfile.gender = gender;
+    // if (birthdate !== undefined) artistProfile.birthdate = birthdate;
+    // if (age !== undefined) artistProfile.age = age;
+    // if (address !== undefined) artistProfile.address = address;
+    // if (image !== null) artistProfile.image = image;
 
     await artistProfile.save();
     res.json({

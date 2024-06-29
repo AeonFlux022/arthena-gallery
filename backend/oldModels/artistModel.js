@@ -31,14 +31,19 @@ module.exports = (sequelize, DataTypes) => {
       as: "artistprofile",
       onDelete: "CASCADE",
     });
-  };
-
-  Artist.associate = (models) => {
     Artist.belongsToMany(models.Artwork, {
       through: "ArtistArtworks",
       as: "artworks",
     });
   };
+
+  // // REDUNDANCY
+  // Artist.associate = (models) => {
+  //   Artist.belongsToMany(models.Artwork, {
+  //     through: "ArtistArtworks",
+  //     as: "artworks",
+  //   });
+  // };
 
   return Artist;
 };
