@@ -1,0 +1,15 @@
+const STATUS = {
+    FOR_SALE: 'FOR SALE',
+    SOLD: 'SOLD',
+    ON_HOLD: 'ON HOLD',
+    PENDING_APPROVAL: 'PENDING APPROVAL',
+    UNDER_REVIEW: 'UNDER REVIEW',
+    UNAVAILABLE: 'UNAVAILABLE',
+    ARCHIVED: 'ARCHIVED',
+    RESERVED: 'RESERVED',
+  };
+  
+Object.freeze(STATUS)
+
+module.exports = STATUS;
+  

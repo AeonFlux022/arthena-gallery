@@ -22,13 +22,13 @@ router.post("/login", async (req, res) => {
       include: "user",
     });
 
-    let role = 1;
+    // let role = 1;
     if (!userProfile) {
       userProfile = await AdminProfile.findOne({
         where: whereClause,
         include: "user",
       });
-      role = 0;
+      // role = 0;
     }
 
     if (!userProfile) {
@@ -52,20 +52,19 @@ router.post("/login", async (req, res) => {
         email: userProfile.email,
         firstName: userProfile.firstName,
         lastName: userProfile.lastName,
-        role,
+        role: userProfile.user.role
       },
       "secret"
-      // process.env.JWT_SECRET
     );
 
     res.json({
-      token: accessToken,
+      accessToken,
       id: userProfile.id,
       username: userProfile.username,
       email: userProfile.email,
       firstName: userProfile.firstName,
       lastName: userProfile.lastName,
-      role,
+      role: userProfile.user.role,
     });
   } catch (error) {
     console.error("Error in login:", error);
@@ -79,7 +78,7 @@ router.post("/login", async (req, res) => {
 
 router.get("/auth", validateToken, async (req, res) => {
   if (req.user.role === 0) {
-    const adminProfile = await AdminProfile.findOne({
+    const adminProfile = await User.findOne({
       where: { id: req.user.id },
     });
     if (adminProfile) {
@@ -96,25 +95,41 @@ router.get("/auth", validateToken, async (req, res) => {
   res.status(400).json({ error: "Unknown user role" });
 
   // checking ga gana man ni sya men, gn kakas ko lang gid ang includes didto sa authmiddleware 
-  //   const { id, role } = req.user;
+    // const { id, role } = req.user;
 
-  //   if (role === 0) {
-  //     const adminProfile = await AdminProfile.findOne({
-  //       where: { id },
-  //     });
-  //     if (adminProfile) {
-  //       return res.json(adminProfile);
-  //     }
-  //   } else if (role === 1) {
-  //     const artistProfile = await ArtistProfile.findOne({
-  //       where: { id },
-  //     });
-  //     if (artistProfile) {
-  //       return res.json(artistProfile);
-  //     }
-  //   }
+    // if (role === 0) {
+    //   const adminProfile = await User.findOne({
+    //     where: {
+    //       id 
+    //     },
+    //     include: [
+    //       {
+    //         model: AdminProfile,
+    //         as: "adminProfile",
+    //       },
+    //     ],
+    //   });
+    //   if (adminProfile) {
+    //     return res.json(adminProfile);
+    //   }
+    // } else if (role === 1) {
+    //   const artistProfile = await User.findOne({
+    //     where: {
+    //       id
+    //     },
+    //     include: [
+    //       {
+    //         model: ArtistProfile,
+    //         as: "artistProfile",
+    //       },
+    //     ],
+    //   });
+    //   if (artistProfile) {
+    //     return res.json(artistProfile);
+    //   }
+    // }
 
-  //   res.status(400).json({ error: "Unknown user role" });
+    // res.status(400).json({ error: "Unknown user role" });
 });
 
 module.exports = router;

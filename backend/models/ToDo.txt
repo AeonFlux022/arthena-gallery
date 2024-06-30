@@ -10,13 +10,13 @@ FIELDS TO ADD
 
 ARTWORK
 3. Categories (?)
-4. Artforms (enum)
+4. Artforms (enum) ..
 - Painting
 -Drawing
 -Print
 -Sculpture
-5. Year made
-6. Orientation (enum)
+5. Year made ..
+6. Orientation (enum) ..
 - Portrait
 - Landscape
 - Square

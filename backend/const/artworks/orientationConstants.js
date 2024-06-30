@@ -1,0 +1,8 @@
+const ORIENTATION = {
+    PORTRAIT: 'PORTRAIT',
+    LANDSCAPE: 'LANDSCAPE',
+    SQUARE: 'SQUARE',
+    IRREGULAR: 'IRREGULAR'
+}
+
+module.exports = ORIENTATION
