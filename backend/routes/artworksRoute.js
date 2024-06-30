@@ -33,6 +33,8 @@ router.post("/:userId", upload.single("imageUrl"), async (req, res) => {
       dimensions,
       medium,
       status,
+      orientation,
+      artForm,
     } = req.body;
     const userId = req.params.userId;
     const imageUrl = req.file ? req.file.filename : null;
@@ -51,6 +53,8 @@ router.post("/:userId", upload.single("imageUrl"), async (req, res) => {
       medium,
       imageUrl,
       status,
+      orientation,
+      artForm,
     });
 
     // // Associate the new Artwork with the Artist
