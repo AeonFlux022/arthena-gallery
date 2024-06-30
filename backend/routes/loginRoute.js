@@ -21,13 +21,13 @@ router.post("/login", async (req, res) => {
       include: "user",
     });
 
-    // let role = 1;
+    let role = 1;
     if (!userProfile) {
       userProfile = await AdminProfile.findOne({
         where: whereClause,
         include: "user",
       });
-      // role = 0;
+      role = 0;
     }
 
     if (!userProfile) {
@@ -53,10 +53,11 @@ router.post("/login", async (req, res) => {
         role: role,
       },
       "secret"
+      // process.env.JWT_SECRET
     );
 
     res.json({
-      accessToken,
+      token: accessToken,
       id: userProfile.id,
       username: userProfile.username,
       firstName: userProfile.firstName,
