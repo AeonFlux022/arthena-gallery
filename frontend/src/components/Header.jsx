@@ -6,18 +6,15 @@ import { AuthContext } from "../helpers/AuthContext";
 function Header() {
   const navigate = useNavigate();
   const { authState, setAuthState } = useContext(AuthContext);
-  console.log(authState);
-  const [artistProfile, setArtistProfile] = useState({});
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     setAuthState({
       username: "",
-      email: "",
       firstName: "",
       lastName: "",
       id: 0,
-      role: null,
+      role: "",
       status: false,
     });
     setTimeout(() => {

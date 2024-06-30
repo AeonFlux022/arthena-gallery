@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { AuthContext } from "./helpers/AuthContext.js";
 import axios from "axios";
@@ -22,83 +22,95 @@ function App() {
   const navigate = useNavigate();
   const [authState, setAuthState] = useState({
     username: "",
-    email: "",
     firstName: "",
     lastName: "",
     id: 0,
-    role: null,
+    role: "",
     status: false,
   });
 
-  // check if may unod and authState if may ara wala lamg, if wala e set
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      axios
-        .get("http://localhost:3005/auth/auth", {
-          headers: {
-            accessToken: localStorage.getItem("accessToken"),
-          },
-        })
-        .then((response) => {
+    const fetchData = async () => {
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        try {
+          const response = await axios.get("http://localhost:3005/auth/auth", {
+            headers: {
+              accessToken: localStorage.getItem("accessToken"),
+            },
+          });
           if (!response.data.error) {
-            setAuthState({
+            setAuthState((prevState) => ({
+              ...prevState,
               username: response.data.username,
-              email: response.data.email,
               firstName: response.data.firstName,
               lastName: response.data.lastName,
               id: response.data.id,
-              role: response.data.role,
+              role: response.data.user.role,
               status: true,
-            });
+            }));
           } else {
-            setAuthState({
-              ...authState,
+            setAuthState((prevState) => ({
+              ...prevState,
               status: false,
-            });
+            }));
             localStorage.removeItem("accessToken");
             navigate("/");
           }
-        })
-        .catch((error) => {
+        } catch (error) {
           console.error("Error fetching authentication data:", error);
-          setAuthState({
-            ...authState,
+          setAuthState((prevState) => ({
+            ...prevState,
             status: false,
-          });
+          }));
           localStorage.removeItem("accessToken");
           navigate("/");
-        });
-    }
+        }
+      }
+    };
+
+    fetchData();
   }, []);
 
   // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3005/auth/auth", {
-  //       headers: {
-  //         accessToken: localStorage.getItem("accessToken"),
-  //       },
-  //     })
-  //     .then((response) => {
-  //       if (response.data.error) {
+  //   const accessToken = localStorage.getItem("accessToken");
+  //   if (accessToken) {
+  //     axios
+  //       .get("http://localhost:3005/auth/auth", {
+  //         headers: {
+  //           accessToken: localStorage.getItem("accessToken"),
+  //         },
+  //       })
+  //       .then((response) => {
+  //         if (!response.data.error) {
+  //           setAuthState({
+  //             username: response.data.username,
+  //             email: response.data.email,
+  //             firstName: response.data.firstName,
+  //             lastName: response.data.lastName,
+  //             id: response.data.id,
+  //             role: response.data.user.role,
+  //             status: true,
+  //           });
+  //         } else {
+  //           setAuthState({
+  //             ...authState,
+  //             status: false,
+  //           });
+  //           localStorage.removeItem("accessToken");
+  //           navigate("/");
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching authentication data:", error);
   //         setAuthState({
   //           ...authState,
   //           status: false,
   //         });
   //         localStorage.removeItem("accessToken");
   //         navigate("/");
-  //       } else {
-  //         setAuthState({
-  //           username: response.data.username,
-  //           email: response.data.email,
-  //           firstName: response.data.firstName,
-  //           lastName: response.data.lastName,
-  //           id: response.data.id,
-  //           role: response.data.role,
-  //           status: true,
-  //         });
-  //       }
-  //     });
+  //       });
+  //   }
   // }, []);
 
   return (

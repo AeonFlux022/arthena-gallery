@@ -6,7 +6,6 @@ const { validateToken } = require("../middlewares/AuthMiddleware.jsx");
 
 const { sign } = require("jsonwebtoken");
 
-
 router.post("/login", async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -49,10 +48,9 @@ router.post("/login", async (req, res) => {
       {
         id: userProfile.id,
         username: userProfile.username,
-        email: userProfile.email,
         firstName: userProfile.firstName,
         lastName: userProfile.lastName,
-        role,
+        role: role,
       },
       "secret"
       // process.env.JWT_SECRET
@@ -62,10 +60,10 @@ router.post("/login", async (req, res) => {
       token: accessToken,
       id: userProfile.id,
       username: userProfile.username,
-      email: userProfile.email,
       firstName: userProfile.firstName,
       lastName: userProfile.lastName,
-      role,
+      role: role,
+      user: userProfile.user, // ari gn dugang ko depota pra ma kuha ang user
     });
   } catch (error) {
     console.error("Error in login:", error);
@@ -73,48 +71,45 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// router.get("/auth", validateToken, async (req, res) => {
-//   res.json(req.user);
-// });
-
 router.get("/auth", validateToken, async (req, res) => {
-  if (req.user.role === 0) {
+  // if (req.user.role === 0) {
+  //   const adminProfile = await AdminProfile.findOne({
+  //     where: { id: req.user.id },
+  //   });
+  //   if (adminProfile) {
+  //     return res.json(adminProfile);
+  //   }
+  // } else if (req.user.role === 1) {
+  //   const artistProfile = await ArtistProfile.findOne({
+  //     where: { id: req.user.id },
+  //   });
+  //   if (artistProfile) {
+  //     return res.json(artistProfile);
+  //   }
+  // }
+  // res.status(400).json({ error: "Unknown user role" });
+
+  const { id, role } = req.user;
+
+  if (role === 0) {
     const adminProfile = await AdminProfile.findOne({
-      where: { id: req.user.id },
+      where: { id },
+      include: "user", // gn add ang includes user pra ma kuha ang sa user profile nga data
     });
     if (adminProfile) {
       return res.json(adminProfile);
     }
-  } else if (req.user.role === 1) {
+  } else if (role === 1) {
     const artistProfile = await ArtistProfile.findOne({
-      where: { id: req.user.id },
+      where: { id },
+      include: "user", // same man di men
     });
     if (artistProfile) {
       return res.json(artistProfile);
     }
   }
+
   res.status(400).json({ error: "Unknown user role" });
-
-  // checking ga gana man ni sya men, gn kakas ko lang gid ang includes didto sa authmiddleware 
-  //   const { id, role } = req.user;
-
-  //   if (role === 0) {
-  //     const adminProfile = await AdminProfile.findOne({
-  //       where: { id },
-  //     });
-  //     if (adminProfile) {
-  //       return res.json(adminProfile);
-  //     }
-  //   } else if (role === 1) {
-  //     const artistProfile = await ArtistProfile.findOne({
-  //       where: { id },
-  //     });
-  //     if (artistProfile) {
-  //       return res.json(artistProfile);
-  //     }
-  //   }
-
-  //   res.status(400).json({ error: "Unknown user role" });
 });
 
 module.exports = router;

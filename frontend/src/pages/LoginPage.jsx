@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "../index.css";
@@ -11,8 +11,6 @@ function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState(null);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const closeAlert = () => {
     setAlert(null);
   };
@@ -42,23 +40,22 @@ function LoginPage() {
         });
       } else {
         localStorage.setItem("accessToken", response.data.token);
-        setAuthState({
+        setAuthState((prevState) => ({
+          ...prevState,
           id: response.data.id,
           username: response.data.username,
           firstName: response.data.firstName,
           lastName: response.data.lastName,
-          email: response.data.email,
-          role: response.data.role,
+          role: response.data.user.role,
           status: true,
+        }));
+        setAlert({
+          type: "success",
+          message: "Success. Please wait to login.",
         });
-        // Navigate based on the user's role
-        if (authState.role === 0) {
-          navigate("/admin");
-        } else if (authState.role === 1) {
+        setTimeout(() => {
           navigate("/");
-        } else {
-          navigate("/");
-        }
+        }, 1000);
       }
     } catch (error) {
       if (

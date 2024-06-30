@@ -19,11 +19,11 @@ function AlertNotification({ alert, closeAlert }) {
     showAlert &&
     alert && (
       <div
-        className={`fixed top-4 right-4 z-50 alert ${
+        className={`fixed top-4 right-4 z-50 gap-4 alert ${
           alert.type === "success"
             ? "bg-green-500 text-white"
             : "bg-red-500 text-white"
-        } rounded-md p-4 w-96 shadow-md flex justify-between items-center`}
+        } rounded-md p-4 w-auto shadow-md flex justify-between items-center`}
         role="alert"
       >
         {alert.message}
