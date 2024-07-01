@@ -187,18 +187,43 @@ router.delete('/deactivate/:id', async (req, res) => {
     const user = await User.findByPk(id)
 
     if(!user) {
-      return res.status(404).send({ err: "Artist not found!"})
+      return res.status(404).send({ err: "Admin not found!"})
     }
 
     user.active = false
     await user.save();
 
     res.status(200).json({
-      message: "Artist account deactivated successfully!"
+      message: "Admin account deactivated successfully!"
     })
   } catch (err) {
     console.error("Error deactivating user:", err);
     res.status(500).json({ error: "Failed to deactivate user. Please try again later." });
+  }
+})
+
+// DELETE ACCOUNT
+router.delete('/delete/:id', async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const user = await User.findByPk(id)
+
+    if(!user) {
+      return res.status(404).send({ err: "Admin not found!"})
+    }
+
+    if(user.active) {
+      return res.status(400).json({ error: "Admin account cannot be deleted. Please deactivate it first." });
+    }
+    await user.destroy();
+
+    res.status(200).json({
+      message: "Admin account deleted successfully!"
+    })
+  } catch (err) {
+    console.error("Error deleting user:", err);
+    res.status(500).json({ error: "Failed to delete user. Please try again later." });
   }
 })
 

@@ -54,6 +54,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      artStyle: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      typeOfArtist: {
+        type: DataTypes.STRING,
+        allowNull: true
+      }
     },
     {
       freezeTableName: true,
