@@ -120,4 +120,127 @@ router.get("/byId/:id", async (req, res) => {
   }
 });
 
+router.put("/update/:id", upload.single("image"), async (req, res) => {
+  const id = req.params.id;
+  const {
+    title,
+    description,
+    price,
+    yearMade,
+    // active,
+    availability,
+    dimensions,
+    medium,
+    orientation,
+    artForms,
+    status,
+  } = req.body;
+  const imageUrl = req.file ? req.file.filename : null;
+
+  try {
+    const artwork = await Artwork.findOne({
+      where: { id },
+    });
+
+    if (!artwork) {
+      return res.status(404).json({ error: "Artwork not found." });
+    }
+    
+    artwork.title = title;
+    artwork.description = description;
+    artwork.price = price;
+    artwork.yearMade = yearMade;
+    // artwork.active = active;
+    artwork.availability = availability;
+    artwork.dimensions = dimensions;
+    artwork.medium = medium;
+    artwork.orientation = orientation;
+    artwork.artForms = artForms;
+    artwork.status = status
+
+    if (imageUrl) {
+      artwork.imageUrl = imageUrl;
+    }
+
+    await artwork.save();
+    res.json({
+      message: "Artwork updated successfully",
+      data: { artwork },
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// ARCHIVE ARTWORK
+router.patch('/archive/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const artwork = await Artwork.findByPk(id)
+
+    if(!artwork) {
+      return res.status(404).send({ err: "Artwork not found!"})
+    }
+
+    artwork.active = false
+    await artwork.save();
+
+    res.status(200).json({
+      message: "Artwork archived successfully!"
+    })
+  } catch (err) {
+    console.error("Error archiving artwork:", err);
+    res.status(500).json({ error: "Failed to archive artwork. Please try again later." });
+  }
+})
+
+// RESTORE ARCHIVED ARTWORK
+router.patch("/restore/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const artwork = await Artwork.findByPk(id);
+
+    if (!artwork) {
+      return res.status(404).json({ error: "Artwork not found" });
+    }
+
+    if (artwork.active) {
+      return res.status(400).json({ error: "Artwork is already active" });
+    }
+
+    artwork.active = true;
+    await artwork.save();
+
+    res.status(200).json({ message: "Artwork restored successfully!" });
+  } catch (error) {
+    console.error("Error in restoring artwork:", error);
+    res.status(500).json({ error: "Failed to restore artwork" });
+  }
+});
+
+
+// DELETE/DESTROY ARTWORK
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const artwork = await Artwork.findByPk(id);
+
+    if (!artwork) {
+      return res.status(404).json({ error: "Artwork not found" });
+    }
+
+    if (artwork.active) {
+      return res.status(400).json({ error: "Active artwork cannot be deleted. Please archive it first." });
+    }
+
+    await artwork.destroy();
+
+    res.status(200).json({ message: "Artwork deleted successfully!" });
+  } catch (error) {
+    console.error("Error in deleting artwork:", error);
+    res.status(500).json({ error: "Failed to delete artwork" });
+  }
+});
+
 module.exports = router;

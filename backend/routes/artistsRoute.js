@@ -41,6 +41,8 @@ router.post("/", async (req, res) => {
       age,
       address,
       image,
+      artStyle,
+      typeOfArtist,
     } = req.body;
 
     const newArtist = await User.create({ role });
@@ -66,6 +68,8 @@ router.post("/", async (req, res) => {
       age,
       address,
       image,
+      artStyle,
+      typeOfArtist,
     });
 
     res.status(201).json({
@@ -136,6 +140,8 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     age,
     address,
     // image: imageName,
+    artStyle,
+    typeOfArtist,
   } = req.body;
   const image = req.file ? req.file.filename : null;
 
@@ -159,6 +165,8 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     artistProfile.birthdate = birthdate;
     artistProfile.age = age;
     artistProfile.address = address;
+    artistProfile.artStyle = artStyle,
+    artistProfile.typeOfArtist = typeOfArtist
 
     if (image) {
       artistProfile.image = image;
