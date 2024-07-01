@@ -120,6 +120,7 @@ router.get("/byId/:id", async (req, res) => {
   }
 });
 
+// UPDATE ARTWORK
 router.put("/update/:id", upload.single("image"), async (req, res) => {
   const id = req.params.id;
   const {
