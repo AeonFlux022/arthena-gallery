@@ -4,6 +4,7 @@ import { AuthContext } from "../helpers/AuthContext";
 import "../index.css";
 import axios from "axios";
 import Header from "../components/Header";
+import Slideshow from "../components/Slideshow.jsx";
 
 function LandingPage() {
   const { authState, setAuthState } = useContext(AuthContext);
@@ -11,9 +12,13 @@ function LandingPage() {
   return (
     <>
       <Header />
-      <div className="flex flex-row bg-primary h-screen shadow-lg">
-        <div className="w-1/2 flex items-center justify-start text-white mx-auto px-4 md:px-6 lg:px-8">
-          <div className="flex flex-col space-y-5 pr-24">
+
+      <section className="flex h-screen shadow-lg">
+        <div className="absolute w-full h-screen bg-gray-300 overflow-hidden">
+          <Slideshow />
+        </div>
+        {/* <div className="relative flex items-center mx-auto justify-center md:px-6 lg:px-8">
+          <div className="relative flex flex-col text-center items-center justify-center p-5 mx-auto space-y-5">
             <h1 className="text-6xl leading-[4rem]">
               Empowering our student artists.
             </h1>
@@ -25,11 +30,8 @@ function LandingPage() {
               Explore Artwork
             </button>
           </div>
-        </div>
-        <div className="w-1/2 bg-gray-100">
-          <img src="hero-image.jpg" className="h-full object-cover" />
-        </div>
-      </div>
+        </div> */}
+      </section>
       <section className="container mx-auto h-auto my-20">
         <div className="container mx-auto w-3/4 lg:w-1/2 text-center mb-12">
           <h1 className="text-4xl mb-4">Our Featured Artworks</h1>

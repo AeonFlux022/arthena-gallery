@@ -6,6 +6,11 @@ import { AuthContext } from "../helpers/AuthContext";
 function Header() {
   const navigate = useNavigate();
   const { authState, setAuthState } = useContext(AuthContext);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
@@ -18,7 +23,7 @@ function Header() {
       status: false,
     });
     setTimeout(() => {
-      navigate("/");
+      navigate("/login");
     }, 0);
   };
 
@@ -32,6 +37,35 @@ function Header() {
                 <img className="max-w-24" src="/tertiary-logo.png" alt="logo" />
               </Link>
             </div>
+            {/* menu for mobile ni sya */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={handleMenuToggle}
+                className="flex items-center px-3 py-2 border rounded text-black border-black hover:bg-secondary hover:text-black"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            {isMenuOpen && (
+              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <div className="sm:ml-6 sm:block">check</div>
+              </div>
+            )}
+
             <div className="hidden md:block">
               <div className="ml-4 flex items-center space-x-5">
                 <Link
@@ -63,7 +97,7 @@ function Header() {
                 {authState.status ? (
                   <div className="flex items-center">
                     <span className="flex py-2 px-3 font-bold">
-                      Hello, {authState.firstName} !
+                      Hello, {authState.firstName}!
                     </span>
                     <Link
                       onClick={handleLogout}
