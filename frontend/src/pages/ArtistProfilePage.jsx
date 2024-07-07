@@ -23,7 +23,7 @@ function ArtistProfilePage() {
       );
       const profileData = await profileResponse.json();
       setArtistProfile(profileData);
-      console.log(artistProfile);
+      // console.log(artistProfile);
     } catch (error) {
       console.error("Error fetching user and artist data:", error);
     }
