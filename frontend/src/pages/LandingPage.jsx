@@ -13,10 +13,8 @@ function LandingPage() {
     <>
       <Header />
 
-      <section className="flex h-screen shadow-lg">
-        <div className="absolute w-full h-screen bg-gray-300 overflow-hidden">
-          <Slideshow />
-        </div>
+      <section className="hidden lg:block lg:h-screen lg:shadow-lg lg:overflow-hidden">
+        <Slideshow />
         {/* <div className="relative flex items-center mx-auto justify-center md:px-6 lg:px-8">
           <div className="relative flex flex-col text-center items-center justify-center p-5 mx-auto space-y-5">
             <h1 className="text-6xl leading-[4rem]">
@@ -32,10 +30,10 @@ function LandingPage() {
           </div>
         </div> */}
       </section>
-      <section className="container mx-auto h-auto my-20">
-        <div className="container mx-auto w-3/4 lg:w-1/2 text-center mb-12">
-          <h1 className="text-4xl mb-4">Our Featured Artworks</h1>
-          <span className="text-xl font-light">
+      <section className="container mx-auto my-10 bg-green-300 lg:my-40">
+        <div className="container mx-auto w-3/4 lg:w-1/2 text-center">
+          <h1 className="text-2xl lg:text-4xl">Our Featured Artworks</h1>
+          <span className="text-md lg:text-xl font-light">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quippe:
             habes enim a rhetoribus; Quis istud possit, inquit, negare? Satis
             est ad hoc responsum.
@@ -47,7 +45,7 @@ function LandingPage() {
             ))}
           </div> */}
       </section>
-      <section className="mx-auto text-center bg-gray-200 my-20 ">
+      <section className="mx-auto text-center bg-gray-200">
         <div className="flex flex-col justify-center items-center py-32">
           <p className="text-xl mb-8">
             &#34;Pollicetur certe. Sint modo partes vitae beatae. Duo Reges:

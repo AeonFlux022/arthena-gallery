@@ -88,7 +88,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   const allArtists = await ArtistProfile.findAll({
     // where: {
-    //   role: 1
+    //   role: 1,
     // },
     // include: [
     //   {
@@ -104,10 +104,11 @@ router.get("/", async (req, res) => {
 router.get("/byId/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const getArtist = await ArtistProfile.findOne({ // User.fineOne
+    const getArtist = await ArtistProfile.findOne({
+      // User.fineOne
       where: {
-        id
-      }
+        id,
+      },
     });
 
     if (!getArtist) {
@@ -153,7 +154,7 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     if (!artistProfile) {
       return res.status(404).json({ error: "Artist not found." });
     }
-    
+
     artistProfile.firstName = firstName;
     artistProfile.middleName = middleName;
     artistProfile.lastName = lastName;
@@ -165,8 +166,8 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     artistProfile.birthdate = birthdate;
     artistProfile.age = age;
     artistProfile.address = address;
-    artistProfile.artStyle = artStyle,
-    artistProfile.typeOfArtist = typeOfArtist
+    (artistProfile.artStyle = artStyle),
+      (artistProfile.typeOfArtist = typeOfArtist);
 
     if (image) {
       artistProfile.image = image;
@@ -197,51 +198,57 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
 });
 
 // DEACTIVATE ACCOUNT
-router.patch('/deactivate/:id', async (req, res) => {
+router.patch("/deactivate/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
-    const user = await User.findByPk(id)
+    const user = await User.findByPk(id);
 
-    if(!user) {
-      return res.status(404).send({ err: "Artist not found!"})
+    if (!user) {
+      return res.status(404).send({ err: "Artist not found!" });
     }
 
-    user.active = false
+    user.active = false;
     await user.save();
 
     res.status(200).json({
-      message: "Artist account deactivated successfully!"
-    })
+      message: "Artist account deactivated successfully!",
+    });
   } catch (err) {
     console.error("Error deactivating user:", err);
-    res.status(500).json({ error: "Failed to deactivate user. Please try again later." });
+    res
+      .status(500)
+      .json({ error: "Failed to deactivate user. Please try again later." });
   }
-})
+});
 
 // DELETE ACCOUNT
-router.delete('/delete/:id', async (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
-    const user = await User.findByPk(id)
+    const user = await User.findByPk(id);
 
-    if(!user) {
-      return res.status(404).send({ err: "Artist not found!"})
+    if (!user) {
+      return res.status(404).send({ err: "Artist not found!" });
     }
 
-    if(user.active) {
-      return res.status(400).json({ error: "Artist account cannot be deleted. Please deactivate it first." });
+    if (user.active) {
+      return res.status(400).json({
+        error: "Artist account cannot be deleted. Please deactivate it first.",
+      });
     }
     await user.destroy();
 
     res.status(200).json({
-      message: "Artist account deleted successfully!"
-    })
+      message: "Artist account deleted successfully!",
+    });
   } catch (err) {
     console.error("Error deleting user:", err);
-    res.status(500).json({ error: "Failed to delete user. Please try again later." });
+    res
+      .status(500)
+      .json({ error: "Failed to delete user. Please try again later." });
   }
-})
+});
 
 module.exports = router;

@@ -11,32 +11,31 @@ export default function Slideshow() {
     slidesToScroll: 1,
     autoplay: true,
     speed: 1500,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 5000,
     pauseOnHover: false,
   };
 
   return (
     <Slider {...settings}>
-      <div>
-        <img
-          src="hero-image.jpg"
-          alt="Image 1"
-          className="w-full h-screen object-fill"
-        />
+      <div className="flex w-full">
+        <div className="flex flex-row">
+          <div className="w-1/2 bg-yellow-300 flex mx-auto items-center justify-center">
+            check
+          </div>
+          <img src="poster4.png" alt="Image 1" className="w-1/2 h-screen" />
+        </div>
       </div>
       <div>
-        <img
-          src="https://placehold.co/1200x800/green/white"
-          alt="Image 2"
-          className="w-full h-screen object-cover"
-        />
+        <div className="flex flex-row">
+          <div className="w-1/2 bg-green-300">check</div>
+          <img src="poster5.png" alt="Image 1" className="w-1/2 h-screen" />
+        </div>
       </div>
       <div>
-        <img
-          src="https://placehold.co/1200x800/pink/black"
-          alt="Image 3"
-          className="w-full h-screen object-cover"
-        />
+        <div className="flex flex-row">
+          <div className="w-1/2 bg-pink-300">check</div>
+          <img src="poster8.png" alt="Image 1" className="w-1/2 h-screen" />
+        </div>
       </div>
     </Slider>
   );

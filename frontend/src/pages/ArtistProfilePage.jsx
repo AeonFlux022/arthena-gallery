@@ -23,7 +23,7 @@ function ArtistProfilePage() {
       );
       const profileData = await profileResponse.json();
       setArtistProfile(profileData);
-      // console.log(authState.id);
+      console.log(artistProfile);
     } catch (error) {
       console.error("Error fetching user and artist data:", error);
     }
@@ -79,7 +79,7 @@ function ArtistProfilePage() {
       <Header />
       <div className="px-4 md:px-6 lg:px-8 my-5">
         <div className="flex flex-row gap-5 mb-5">
-          <div className="flex flex-col w-1/4 h-screen rounded-lg text-center bg-primary p-5">
+          <div className="flex flex-col w-1/4 h-screen rounded text-center border-primary bg-neutral border p-5">
             <img
               className="rounded-full size-36 mx-auto items-center justify-center mb-5"
               src={`http://localhost:3005/uploads/${
@@ -95,10 +95,10 @@ function ArtistProfilePage() {
               {artistProfile.firstName} {artistProfile.lastName}
             </h1>
             <span className="text-sm">{artistProfile.email}</span>
-            <section className=" flex flex-col h-96 justify-between mt-5">
+            <section className=" flex flex-col h-96 justify-between mt-5 text-sm">
               <div>
                 <span>{artistProfile.address}</span>
-                <span>{artistProfile.birthday}</span>
+                <span>{artistProfile.description}</span>
               </div>
               <div className="flex flex-col justify-end">
                 <Link to={`/editartist/${authState.id}`}>

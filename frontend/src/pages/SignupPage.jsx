@@ -78,17 +78,17 @@ function SignupPage() {
   return (
     <>
       {/* <Header /> */}
-      <div className="h-dvh bg-neutral">
-        <section className="flex h-full px-0 flex-col lg:flex-row">
-          <div className="flex flex-col w-full justify-center py-5 lg:w-3/4">
-            <div className="w-full px-20 pt-20 mb-20">
+      <div className=" bg-neutral">
+        <section className="flex p-5 flex-col lg:p-10 lg:flex-row">
+          <div className="flex flex-col w-full justify-center p-8 lg:w-3/4  bg-white border border-1">
+            <div className="justify-center mx-auto">
               <div className="leading-6 mb-6">
                 <h1 className="text-4xl">Join us today!</h1>
                 <p className="text-xl">Sign up and let's get started.</p>
               </div>
               <div className="">
                 <form onSubmit={handleSubmit}>
-                  <div className="flex flex-row gap-2">
+                  <div className="flex flex-col gap-2 md:flex-row">
                     <div className="w-full">
                       <label className="block text-sm font-medium leading-6">
                         First Name
@@ -135,7 +135,7 @@ function SignupPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-row gap-2">
+                  <div className="flex flex-col gap-2 md:flex-row">
                     <div className="w-full">
                       <label className="block text-sm font-medium leading-6">
                         Phone Number
@@ -262,7 +262,7 @@ function SignupPage() {
                     </div>
                   </div>
                   <AlertNotification alert={alert} closeAlert={closeAlert} />
-                  <div className="flex flex-row gap-2 justify-center mt-8">
+                  <div className="flex flex-col gap-2 justify-center mt-8 text-sm lg:flex-row">
                     <button
                       className="bg-primary text-white font-bold w-full p-3 hover:bg-primary-light"
                       type="submit"
