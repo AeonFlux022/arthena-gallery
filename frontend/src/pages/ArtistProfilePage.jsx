@@ -79,9 +79,9 @@ function ArtistProfilePage() {
       <Header />
       <div className="px-4 md:px-6 lg:px-8 my-5">
         <div className="flex flex-row gap-5 mb-5">
-          <div className="flex flex-col w-1/4 h-screen rounded text-center border-primary bg-neutral border p-5">
+          <div className="flex flex-col w-1/4 h-auto rounded text-center border border-primary p-5">
             <img
-              className="rounded-full size-36 mx-auto items-center justify-center mb-5"
+              className="rounded-full border-4 border-primary size-36 mx-auto items-center justify-center mb-5"
               src={`http://localhost:3005/uploads/${
                 artistProfile.image || "https://placehold.co/300x300"
               }`}
@@ -91,21 +91,40 @@ function ArtistProfilePage() {
                 e.target.src = "https://placehold.co/300x300";
               }}
             />
+            <div className="flex flex-col mb-5">
+              <Link to={`/editartist/${authState.id}`}>
+                <button className="p-2 text-white bg-black w-44 hover:bg-gray-800">
+                  Edit Profile
+                </button>
+              </Link>
+            </div>
             <h1 className="text-xl">
               {artistProfile.firstName} {artistProfile.lastName}
             </h1>
             <span className="text-sm">{artistProfile.email}</span>
-            <section className=" flex flex-col h-96 justify-between mt-5 text-sm">
-              <div>
-                <span>{artistProfile.address}</span>
-                <span>{artistProfile.description}</span>
+            <section className="flex flex-col h-96 space-y-5 mt-5 text-sm">
+              <hr />
+              <div className="flex flex-col">
+                <span className="font-bold text-xs">Art Style</span>
+                <span>{artistProfile.artStyle || "Not yet added"}</span>
               </div>
-              <div className="flex flex-col justify-end">
-                <Link to={`/editartist/${authState.id}`}>
-                  <button className="p-2 text-white bg-black w-44 hover:bg-gray-800">
-                    Edit Profile
-                  </button>
-                </Link>
+              <div className="flex flex-col">
+                <span className="font-bold text-xs">Address</span>
+                <span>{artistProfile.address}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-xs">Contact Number</span>
+                <span>{artistProfile.phoneNumber}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-xs">Birthdate</span>
+                <span>
+                  {moment(artistProfile.birthdate).format("MMMM D, YYYY")}
+                </span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-xs">Member Since</span>
+                <span> {moment(artistProfile.createdAt).format("MMMM YYYY")}</span>
               </div>
             </section>
           </div>

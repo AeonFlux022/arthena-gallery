@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       phoneNumber: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: true,
       },
       gender: {
@@ -56,12 +56,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       artStyle: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
       },
       typeOfArtist: {
         type: DataTypes.STRING,
-        allowNull: true
-      }
+        allowNull: true,
+      },
     },
     {
       freezeTableName: true,
@@ -84,4 +84,3 @@ module.exports = (sequelize, DataTypes) => {
 
   return ArtistProfile;
 };
-
