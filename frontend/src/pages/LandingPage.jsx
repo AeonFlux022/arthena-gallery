@@ -21,7 +21,7 @@ function LandingPage() {
               Empowering our student artists.
             </h1>
             <span className="text-xl text-balance font-light">
-              Join our community of emerging artist and share your art to ignite
+              Join our community of em erging artist and share your art to ignite
               inspiration.
             </span>
             <button className="bg-secondary w-44 p-3 font-bold text-black hover:bg-secondary-dark">

@@ -10,31 +10,55 @@ export default function Slideshow() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    speed: 1500,
+    speed: 2000,
     autoplaySpeed: 5000,
     pauseOnHover: false,
   };
 
   return (
     <Slider {...settings}>
-      <div className="flex w-full">
-        <div className="flex flex-row">
-          <div className="w-1/2 bg-yellow-300 flex mx-auto items-center justify-center">
-            check
+      <div>
+        <div className="flex">
+          <div className="absolute h-screen flex items-center justify-left px-10">
+            <div className="w-2/3 flex flex-col space-y-5">
+              <h1 className="text-6xl leading-[4rem] text-black">
+                Want to earn while making art?
+              </h1>
+              <span className="text-xl text-balance font-light">
+                Your dedicated online art gallery.
+              </span>
+              <button className="bg-secondary w-44 p-3 font-bold text-black hover:bg-secondary-dark">
+                Learn more
+              </button>
+            </div>
           </div>
-          <img src="poster4.png" alt="Image 1" className="w-1/2 h-screen" />
+          <img
+            src="slideshow-1.png"
+            alt="Image 1"
+            className="w-full h-screen"
+          />
         </div>
       </div>
       <div>
-        <div className="flex flex-row">
-          <div className="w-1/2 bg-green-300">check</div>
-          <img src="poster5.png" alt="Image 1" className="w-1/2 h-screen" />
-        </div>
-      </div>
-      <div>
-        <div className="flex flex-row">
-          <div className="w-1/2 bg-pink-300">check</div>
-          <img src="poster8.png" alt="Image 1" className="w-1/2 h-screen" />
+        <div className="flex w-full">
+          <div className="absolute h-screen flex items-center justify-left px-10">
+            <div className="w-2/3 flex flex-col space-y-5">
+              <h1 className="text-6xl leading-[4rem] text-black">
+                Earning can also be creative.
+              </h1>
+              <span className="text-xl text-balance font-light">
+                Your dedicated online art gallery.
+              </span>
+              <button className="bg-secondary w-44 p-3 font-bold text-black hover:bg-secondary-dark">
+                Learn more
+              </button>
+            </div>
+          </div>
+          <img
+            src="slideshow-2.png"
+            alt="Image 1"
+            className="w-full h-screen"
+          />
         </div>
       </div>
     </Slider>
