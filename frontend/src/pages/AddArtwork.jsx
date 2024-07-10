@@ -26,6 +26,10 @@ function AddArtwork() {
     dimensions: "",
     description: "",
     price: "",
+    orientation: "",
+    artForms: "",
+    yearMade: "",
+    artForms: "",
   });
 
   async function handleSubmit(event) {
@@ -54,6 +58,9 @@ function AddArtwork() {
     formDataWithImage.append("dimensions", formData.dimensions);
     formDataWithImage.append("description", formData.description);
     formDataWithImage.append("price", formData.price);
+    formDataWithImage.append("artForms", formData.artForms);
+    formDataWithImage.append("orientation", formData.orientation);
+    formDataWithImage.append("yearMade", formData.yearMade);
 
     try {
       // const response = await axios.post(
@@ -260,6 +267,62 @@ function AddArtwork() {
                 </div>
                 <div className="w-full">
                   <label className="block text-sm font-medium leading-6">
+                    Orientation
+                  </label>
+                  <div className="my-2 relative">
+                    <select
+                      name="orientation"
+                      onChange={handleChange}
+                      value={formData.orientation}
+                      className="w-full border-box p-2.5 bg-neutral placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark appearance-none pr-8"
+                    >
+                      <option value="">Select orientation of artwork</option>
+                      <option value="PORTRAIT">Portrait</option>
+                      <option value="LANDSCAPE">Landscape</option>
+                      <option value="SQUARE">Square</option>
+                      <option value="IRREGULAR">Irregular</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                      <svg
+                        className="fill-current h-4 w-4"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full">
+                  <label className="block text-sm font-medium leading-6">
+                    Art Form
+                  </label>
+                  <div className="my-2 relative">
+                    <select
+                      name="artForms"
+                      onChange={handleChange}
+                      value={formData.artForms}
+                      className="w-full border-box p-2.5 bg-neutral placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark appearance-none pr-8"
+                    >
+                      <option value="">Select form of artwork</option>
+                      <option value="PAINTINGS">Paintings</option>
+                      <option value="DRAWINGS">Drawings</option>
+                      <option value="PRINT">Print</option>
+                      <option value="SCULPTURE">Sculpture</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                      <svg
+                        className="fill-current h-4 w-4"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full">
+                  <label className="block text-sm font-medium leading-6">
                     Price
                   </label>
                   <div className="my-2">
@@ -269,6 +332,21 @@ function AddArtwork() {
                       className="w-full border-box p-2.5 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400"
                       placeholder="Price"
                       value={formData.price}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="w-full">
+                  <label className="block text-sm font-medium leading-6">
+                    Year Made
+                  </label>
+                  <div className="my-2">
+                    <input
+                      type="text"
+                      name="yearMade"
+                      className="w-full border-box p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400"
+                      placeholder="What year the artwork is made?"
+                      value={formData.yearMade}
                       onChange={handleChange}
                     />
                   </div>

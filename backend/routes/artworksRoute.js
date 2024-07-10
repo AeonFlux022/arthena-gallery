@@ -34,7 +34,8 @@ router.post("/:userId", upload.single("imageUrl"), async (req, res) => {
       medium,
       status,
       orientation,
-      artForm,
+      artForms,
+      yearMade,
     } = req.body;
     const userId = req.params.userId;
     const imageUrl = req.file ? req.file.filename : null;
@@ -54,17 +55,19 @@ router.post("/:userId", upload.single("imageUrl"), async (req, res) => {
       imageUrl,
       status,
       orientation,
-      artForm,
+      artForms,
+      yearMade,
     });
 
     // // Associate the new Artwork with the Artist
     // await newArtwork.addArtist(user);
 
-    await user.addArtwork(newArtwork)
+    await user.addArtwork(newArtwork);
 
-    res.status(201).json({ 
+    res.status(201).json({
       message: "Artwork added successfully!",
-      data: { newArtwork } });
+      data: { newArtwork },
+    });
   } catch (error) {
     console.error("Error in creating artwork:", error);
     res.status(500).json({ error: "Failed to add artwork!" });
@@ -146,7 +149,7 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     if (!artwork) {
       return res.status(404).json({ error: "Artwork not found." });
     }
-    
+
     artwork.title = title;
     artwork.description = description;
     artwork.price = price;
@@ -157,7 +160,7 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     artwork.medium = medium;
     artwork.orientation = orientation;
     artwork.artForms = artForms;
-    artwork.status = status
+    artwork.status = status;
 
     if (imageUrl) {
       artwork.imageUrl = imageUrl;
@@ -175,26 +178,28 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
 });
 
 // ARCHIVE ARTWORK
-router.patch('/archive/:id', async (req, res) => {
+router.patch("/archive/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const artwork = await Artwork.findByPk(id)
+    const artwork = await Artwork.findByPk(id);
 
-    if(!artwork) {
-      return res.status(404).send({ err: "Artwork not found!"})
+    if (!artwork) {
+      return res.status(404).send({ err: "Artwork not found!" });
     }
 
-    artwork.active = false
+    artwork.active = false;
     await artwork.save();
 
     res.status(200).json({
-      message: "Artwork archived successfully!"
-    })
+      message: "Artwork archived successfully!",
+    });
   } catch (err) {
     console.error("Error archiving artwork:", err);
-    res.status(500).json({ error: "Failed to archive artwork. Please try again later." });
+    res
+      .status(500)
+      .json({ error: "Failed to archive artwork. Please try again later." });
   }
-})
+});
 
 // RESTORE ARCHIVED ARTWORK
 router.patch("/restore/:id", async (req, res) => {
@@ -220,7 +225,6 @@ router.patch("/restore/:id", async (req, res) => {
   }
 });
 
-
 // DELETE/DESTROY ARTWORK
 router.delete("/delete/:id", async (req, res) => {
   try {
@@ -232,7 +236,9 @@ router.delete("/delete/:id", async (req, res) => {
     }
 
     if (artwork.active) {
-      return res.status(400).json({ error: "Active artwork cannot be deleted. Please archive it first." });
+      return res.status(400).json({
+        error: "Active artwork cannot be deleted. Please archive it first.",
+      });
     }
 
     await artwork.destroy();

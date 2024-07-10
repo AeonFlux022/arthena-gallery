@@ -185,17 +185,26 @@ function SignupPage() {
                       <label className="block text-sm font-medium leading-6">
                         Gender
                       </label>
-                      <div className="my-2 shadow-sm">
+                      <div className="my-2 relative shadow-sm">
                         <select
                           name="gender"
                           onChange={handleChange}
                           value={formData.gender}
-                          className="block w-full border-box h-11 p-2.5 bg-neutral placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark"
+                          className="block w-full border-box h-11 p-2.5 bg-neutral placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-dark appearance-none"
                         >
                           <option value="">Select your gender</option>
                           <option value="male">Male</option>
                           <option value="female">Female</option>
                         </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                          <svg
+                            className="fill-current h-4 w-4"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
                   </div>
