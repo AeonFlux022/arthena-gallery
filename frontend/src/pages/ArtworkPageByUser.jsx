@@ -63,6 +63,7 @@ function ArtworkPageByUser() {
                   <li>Medium</li>
                   <li>Orientation</li>
                   <li>Dimensions</li>
+                  <li>Artwork Form</li>
                   <li>Price</li>
                   <li>Year Made</li>
                 </ul>
@@ -72,6 +73,7 @@ function ArtworkPageByUser() {
                   <li>{artwork.medium}</li>
                   <li>{artwork.orientation}</li>
                   <li>{artwork.dimensions}</li>
+                  <li>{artwork.artForms}</li>
                   <li>&#8369; {artwork.price}</li>
                   <li>{artwork.yearMade}</li>
                 </ul>

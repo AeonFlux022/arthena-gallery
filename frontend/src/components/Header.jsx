@@ -75,15 +75,10 @@ function Header() {
                   <span>Home</span>
                 </Link>
                 <Link
-                  to="#"
+                  to="/gallery"
                   className="flex hover:bg-secondary hover:text-black py-2 px-3"
                 >
-                  <Link
-                    to="/gallery"
-                    className="flex hover:bg-secondary hover:text-black py-2 px-3"
-                  >
-                    <span>Gallery</span>
-                  </Link>
+                  <span>Gallery</span>
                 </Link>
                 <Link
                   to="/allArtists"

@@ -111,6 +111,10 @@ function Artist() {
                   {moment(artistProfile.createdAt).format("MMMM YYYY")}
                 </span>
               </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-xs">Bio</span>
+                <span>{artistProfile.bio}</span>
+              </div>
             </section>
           </div>
           <div className="w-3/4">

@@ -15,6 +15,7 @@ function ArtistsPage() {
   const [artworksByArtist, setArtworksByArtist] = useState({});
   const [filteredArtists, setFilteredArtists] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const navigate = useNavigate();
 
   const fetchArtists = async () => {
     try {
@@ -47,24 +48,25 @@ function ArtistsPage() {
   }, []);
 
   const handleSearch = (searchTerm) => {
-    if (searchTerm.trim() === "") {
+    searchTerm = searchTerm.trim().toLowerCase();
+
+    if (!searchTerm) {
       setFilteredArtists([]);
       setShowSuggestions(false);
-    } else {
-      const filtered = Object.values(allArtists).filter((artist) =>
-        `${artist.firstName} ${artist.lastName}`
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
-      );
-
-      if (filtered.length === 0) {
-        setFilteredArtists([]);
-        setShowSuggestions(false);
-      } else {
-        setFilteredArtists(filtered);
-        setShowSuggestions(true);
-      }
+      return;
     }
+
+    const filtered = Object.values(allArtists).filter(
+      ({ firstName, lastName }) =>
+        `${firstName} ${lastName}`.toLowerCase().includes(searchTerm)
+    );
+
+    setFilteredArtists(filtered);
+    setShowSuggestions(filtered.length > 0);
+  };
+
+  const handleArtworkClick = (artworkId) => {
+    navigate(`/artworkpage/${artworkId}`);
   };
 
   return (
@@ -127,7 +129,11 @@ function ArtistsPage() {
                     {(artworksByArtist[artist.id] || [])
                       .slice(0, 3)
                       .map((artwork) => (
-                        <div key={artwork.id} className="bg-white shadow-md">
+                        <div
+                          key={artwork.id}
+                          className="bg-white shadow-md cursor-pointer hover:cursor-pointer"
+                          onClick={() => handleArtworkClick(artwork.id)}
+                        >
                           <img
                             src={`http://localhost:3005/uploads/${artwork.imageUrl}`}
                             alt={artwork.title}
