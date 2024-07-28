@@ -16,6 +16,7 @@ import EditArtist from "./pages/EditArtist.jsx";
 import AddArtwork from "./pages/AddArtwork.jsx";
 // import EditArtwork from "./pages/EditArtwork.jsx";
 import ArtworkPageByUser from "./pages/ArtworkPageByUser.jsx";
+import Gallery from "./pages/Gallery.jsx";
 import ArtistsPage from "./pages/ArtistsPage.jsx";
 import Artist from "./pages/Artist.jsx";
 
@@ -123,6 +124,7 @@ function App() {
           <Route path="/signup" exact element={<SignupPage />} />
           <Route path="/login" exact element={<LoginPage />} />
           <Route path="/allArtists" exact element={<ArtistsPage />} />
+          <Route path="/gallery" exact element={<Gallery />} />
           <Route path="/artist/:artistid" exact element={<Artist />} />
           <Route
             path="/artistprofile/:id"
