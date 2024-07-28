@@ -2,11 +2,11 @@ import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import { AuthContext } from "../helpers/AuthContext";
-import { FuncContext } from "../helpers/FuncContext";
-import "../index.css";
-import Header from "../components/Header";
-import AlertNotification from "../components/AlertNotification.jsx";
+import { AuthContext } from "../../helpers/AuthContext.js";
+import { FuncContext } from "../../helpers/FuncContext.js";
+import "../../index.css";
+import Header from "../../components/Header.jsx";
+import AlertNotification from "../../components/AlertNotification.jsx";
 
 function AddArtwork() {
   const { CreateArtwork } = useContext(FuncContext);

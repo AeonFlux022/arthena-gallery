@@ -11,14 +11,14 @@ import Dashboard from "./admin/Dashboard.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import ArtistProfilePage from "./pages/ArtistProfilePage.jsx";
-import EditArtist from "./pages/EditArtist.jsx";
-import AddArtwork from "./pages/AddArtwork.jsx";
+import ArtistProfilePage from "./pages/artist/ArtistProfilePage.jsx";
+import EditArtist from "./pages/artist/EditArtist.jsx";
+import AddArtwork from "./pages/artist/AddArtwork.jsx";
 // import EditArtwork from "./pages/EditArtwork.jsx";
 import ArtworkPageByUser from "./pages/ArtworkPageByUser.jsx";
 import Gallery from "./pages/Gallery.jsx";
-import ArtistsPage from "./pages/ArtistsPage.jsx";
-import Artist from "./pages/Artist.jsx";
+import ArtistsPage from "./pages/guest/ArtistsPage.jsx";
+import Artist from "./pages/guest/Artist.jsx";
 
 function App() {
   const navigate = useNavigate();

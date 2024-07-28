@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { AuthContext } from "../helpers/AuthContext";
+import { AuthContext } from "../../helpers/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import "../index.css";
+import "../../index.css";
 import axios from "axios";
-import Header from "../components/Header";
-import SearchBar from "../components/SearchBar";
+import Header from "../../components/Header";
+import SearchBar from "../../components/SearchBar";
 import moment from "moment";
 
 function ArtistsPage() {

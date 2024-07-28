@@ -1,41 +1,45 @@
-import React, { useEffect, useState, useMemo, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import "../index.css";
+import { AuthContext } from "../../helpers/AuthContext";
+import "../../index.css";
 import axios from "axios";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 import moment from "moment";
 
-function Artist() {
-  const { artistid } = useParams();
+function ArtistProfilePage() {
+  const [loggedArtist, setLoggedArtist] = useState({});
   const [artistProfile, setArtistProfile] = useState({});
   const [artworkData, setArtworkData] = useState({});
+  const { authState, setAuthState } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  // const [artistId, setArtistId] = useState(null);
 
   const fetchArtist = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3005/artists/byId/${artistid}`
+      // Fetch the artist profile data
+      const profileResponse = await fetch(
+        `http://localhost:3005/artists/byId/${authState.id}`
       );
-      const data = await response.json();
-      setArtistProfile(data);
-      // console.log(data);
+      const profileData = await profileResponse.json();
+      setArtistProfile(profileData);
+      // console.log(artistProfile);
     } catch (error) {
       console.error("Error fetching user and artist data:", error);
     }
   };
 
   useEffect(() => {
-    if (artistid) {
-      fetchArtist(artistid);
+    if (authState.id) {
+      fetchArtist();
     }
-  }, [artistid]);
+  }, [authState.id]);
 
   const fetchArtworks = async () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:3005/artworks/all/byId/${artistid}`
+        `http://localhost:3005/artworks/all/byId/${authState.id}`
       );
       const responseData = await response.json();
       // console.log(responseData);
@@ -48,15 +52,32 @@ function Artist() {
   };
 
   useEffect(() => {
-    if (artistid) {
+    if (authState.id) {
       fetchArtworks();
     }
-  }, [artistid]);
+  }, [authState.id]);
+
+  const handleEditArtwork = (artworkId) => {
+    navigate(`/artworkpage/${artworkId}`);
+  };
+
+  const roleText = (role) => {
+    switch (role) {
+      case 0:
+        return "Admin";
+      case 1:
+        return "Artist";
+      case 2:
+        return "Buyer";
+      default:
+        return "Unknown";
+    }
+  };
 
   return (
     <>
       <Header />
-      <main className="px-4 md:px-6 lg:px-8 my-5">
+      <div className="px-4 md:px-6 lg:px-8 my-5">
         <div className="flex gap-5 mb-5">
           <div className="flex flex-col w-1/4 h-auto rounded text-center border border-primary p-5">
             <img
@@ -71,11 +92,11 @@ function Artist() {
               }}
             />
             <div className="flex flex-col mb-5">
-              {/* <Link to={`/editartist/${authState.id}`}>
+              <Link to={`/editartist/${authState.id}`}>
                 <button className="p-2 text-white bg-black w-44 hover:bg-gray-800">
                   Edit Profile
                 </button>
-              </Link> */}
+              </Link>
             </div>
             <h1 className="text-xl">
               {artistProfile.firstName} {artistProfile.lastName}
@@ -162,9 +183,18 @@ function Artist() {
             </section>
           </div>
         </div>
-      </main>
+      </div>
+      <div className="flex px-8">
+        <div className="flex flex-col bg-gray-200 border border-primary rounded h-24 w-full justify-center items-center text-center">
+          <Link to={`/artistprofile/${authState.id}/add`}>
+            <button className="w-56 p-3 bg-secondary text-black font-bold hover:bg-secondary-dark">
+              Add your artwork
+            </button>
+          </Link>
+        </div>
+      </div>
     </>
   );
 }
 
-export default Artist;
+export default ArtistProfilePage;

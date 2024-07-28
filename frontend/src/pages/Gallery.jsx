@@ -8,7 +8,7 @@ function Gallery() {
     <>
       <Header />
       <main className="px-4 md:px-6 lg:px-8 my-5">
-        <h1>Gallery</h1>
+        <h1 className="text-2xl">Gallery</h1>
       </main>
     </>
   );

@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { AuthContext } from "../helpers/AuthContext";
-import "../index.css";
+import { AuthContext } from "../../helpers/AuthContext.js";
+import "../../index.css";
 import axios from "axios";
-import Header from "../components/Header";
+import Header from "../../components/Header.jsx";
 import moment from "moment";
-import AlertNotification from "../components/AlertNotification.jsx";
+import AlertNotification from "../../components/AlertNotification.jsx";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 
