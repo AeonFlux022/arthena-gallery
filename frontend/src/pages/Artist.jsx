@@ -1,45 +1,41 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useMemo, useContext } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { AuthContext } from "../helpers/AuthContext";
 import "../index.css";
 import axios from "axios";
 import Header from "../components/Header";
 import moment from "moment";
 
-function ArtistProfilePage() {
-  const [loggedArtist, setLoggedArtist] = useState({});
+function Artist() {
+  const { artistid } = useParams();
   const [artistProfile, setArtistProfile] = useState({});
   const [artworkData, setArtworkData] = useState({});
-  const { authState, setAuthState } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  // const [artistId, setArtistId] = useState(null);
 
   const fetchArtist = async () => {
     try {
-      // Fetch the artist profile data
-      const profileResponse = await fetch(
-        `http://localhost:3005/artists/byId/${authState.id}`
+      const response = await fetch(
+        `http://localhost:3005/artists/byId/${artistid}`
       );
-      const profileData = await profileResponse.json();
-      setArtistProfile(profileData);
-      // console.log(artistProfile);
+      const data = await response.json();
+      setArtistProfile(data);
+      // console.log(data);
     } catch (error) {
       console.error("Error fetching user and artist data:", error);
     }
   };
 
   useEffect(() => {
-    if (authState.id) {
-      fetchArtist();
+    if (artistid) {
+      fetchArtist(artistid);
     }
-  }, [authState.id]);
+  }, [artistid]);
 
   const fetchArtworks = async () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:3005/artworks/all/byId/${authState.id}`
+        `http://localhost:3005/artworks/all/byId/${artistid}`
       );
       const responseData = await response.json();
       // console.log(responseData);
@@ -52,32 +48,15 @@ function ArtistProfilePage() {
   };
 
   useEffect(() => {
-    if (authState.id) {
+    if (artistid) {
       fetchArtworks();
     }
-  }, [authState.id]);
-
-  const handleEditArtwork = (artworkId) => {
-    navigate(`/artworkpage/${artworkId}`);
-  };
-
-  const roleText = (role) => {
-    switch (role) {
-      case 0:
-        return "Admin";
-      case 1:
-        return "Artist";
-      case 2:
-        return "Buyer";
-      default:
-        return "Unknown";
-    }
-  };
+  }, [artistid]);
 
   return (
     <>
       <Header />
-      <div className="px-4 md:px-6 lg:px-8 my-5">
+      <main className="px-4 md:px-6 lg:px-8 my-5">
         <div className="flex gap-5 mb-5">
           <div className="flex flex-col w-1/4 h-auto rounded text-center border border-primary p-5">
             <img
@@ -92,11 +71,11 @@ function ArtistProfilePage() {
               }}
             />
             <div className="flex flex-col mb-5">
-              <Link to={`/editartist/${authState.id}`}>
+              {/* <Link to={`/editartist/${authState.id}`}>
                 <button className="p-2 text-white bg-black w-44 hover:bg-gray-800">
                   Edit Profile
                 </button>
-              </Link>
+              </Link> */}
             </div>
             <h1 className="text-xl">
               {artistProfile.firstName} {artistProfile.lastName}
@@ -183,18 +162,9 @@ function ArtistProfilePage() {
             </section>
           </div>
         </div>
-      </div>
-      <div className="flex px-8">
-        <div className="flex flex-col bg-gray-200 border border-primary rounded h-24 w-full justify-center items-center text-center">
-          <Link to={`/artistprofile/${authState.id}/add`}>
-            <button className="w-56 p-3 bg-secondary text-black font-bold hover:bg-secondary-dark">
-              Add your artwork
-            </button>
-          </Link>
-        </div>
-      </div>
+      </main>
     </>
   );
 }
 
-export default ArtistProfilePage;
+export default Artist;

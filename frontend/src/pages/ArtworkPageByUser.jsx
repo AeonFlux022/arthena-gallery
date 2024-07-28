@@ -6,7 +6,7 @@ import axios from "axios";
 import Header from "../components/Header";
 import moment from "moment";
 
-function ArtworkPage() {
+function ArtworkPageByUser() {
   const { artworkId } = useParams();
   const { authState, setAuthState } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ function ArtworkPage() {
             />
           </div>
           <div className="flex flex-col w-1/2 h-44 px-4 pb-4 space-y-3">
-            <h1 className="font-bold text-2xl">About the Artwork</h1>
+            <h1 className="font-bold text-xl ">About the Artwork</h1>
             <span className="font-light text-pretty">
               {artwork.description}
             </span>
@@ -61,15 +61,19 @@ function ArtworkPage() {
               <div className="uppercase w-1/4">
                 <ul className="space-y-3">
                   <li>Medium</li>
+                  <li>Orientation</li>
                   <li>Dimensions</li>
                   <li>Price</li>
+                  <li>Year Made</li>
                 </ul>
               </div>
               <div className="w-1/2">
                 <ul className="space-y-3">
                   <li>{artwork.medium}</li>
+                  <li>{artwork.orientation}</li>
                   <li>{artwork.dimensions}</li>
                   <li>&#8369; {artwork.price}</li>
+                  <li>{artwork.yearMade}</li>
                 </ul>
               </div>
             </div>
@@ -80,4 +84,4 @@ function ArtworkPage() {
   );
 }
 
-export default ArtworkPage;
+export default ArtworkPageByUser;

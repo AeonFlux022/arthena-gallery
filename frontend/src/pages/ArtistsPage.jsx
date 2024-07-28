@@ -82,7 +82,7 @@ function ArtistsPage() {
                   {filteredArtists.map((artist) => (
                     <div key={artist.id} className="">
                       <Link
-                        to={`/artists/${artist.id}`}
+                        to={`/artist/${artist.id}`}
                         className="font-semibold"
                       >
                         {artist.firstName} {artist.lastName}
@@ -115,7 +115,7 @@ function ArtistsPage() {
                     <span className="text-gray-600 text-sm">
                       {artist.address}
                     </span>
-                    <Link to="">
+                    <Link to={`/artist/${artist.id}`}>
                       <button className="mt-5 w-full items-end mx-auto text-white bg-primary p-2 hover:bg-primary-dark">
                         View Profile
                       </button>
@@ -147,53 +147,6 @@ function ArtistsPage() {
             </div>
           ))}
         </section>
-        {/* <section className="h-auto py-4">
-          {Object.values(allArtists).map((artist) => (
-            <div key={artist.id} className="w-full mb-5">
-              <div className="bg-neutral shadow-md h-auto flex flex-row">
-                <div className="w-1/3 flex flex-col p-5 space-y-3">
-                  <div className="justify-center mx-auto items-center">
-                    <img
-                      src={`http://localhost:3005/uploads/${artist.image}`}
-                      className="rounded-full bg-gray-300 size-32"
-                    />
-                  </div>
-                  <div className="">
-                    <h3 className="text-lg font-bold text-primary">
-                      {artist.firstName} {artist.lastName}
-                    </h3>
-                    <span className="text-gray-600 text-sm">
-                      {artist.address}
-                    </span>
-                    <button className="mt-5 w-full text-white bg-primary p-2 hover:bg-primary-dark">
-                      View Profile
-                    </button>
-                  </div>
-                </div>
-                <div className="w-full p-4 bg-yellow-200">
-                  <div className="flex flex-row space-between">
-                    {(artworksByArtist[artist.id] || []).map((artwork) => (
-                      <div
-                        key={artwork.id}
-                        className="w-1/3 p-4 bg-white rounded-lg shadow-md"
-                      >
-                        <img
-                          src={`http://localhost:3005/uploads/${artwork.imageUrl}`}
-                          alt={artwork.title}
-                          className="w-full h-48 object-cover rounded-t-lg"
-                        />
-                        <div className="p-4">
-                          <h3 className="text-lg font-bold">{artwork.title}</h3>
-                          <p>{artwork.description}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </section> */}
       </main>
     </>
   );
