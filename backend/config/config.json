@@ -18,7 +18,6 @@
     "password": null,
     "database": "production_db",
     "host": "localhost",
-    "dialect": "mysql",
-    "port": "3306"
+    "dialect": "mysql"
   }
 }
