@@ -79,7 +79,7 @@ function ArtistProfilePage() {
       <Header />
       <div className="px-4 md:px-6 lg:px-8 my-5">
         <div className="flex gap-5 mb-5">
-          <div className="flex flex-col w-1/4 h-auto rounded text-center border border-primary p-5">
+          <div className="flex flex-col w-1/4 rounded text-center border border-primary p-5">
             <img
               className="rounded-full border-4 border-primary size-36 mx-auto items-center justify-center mb-5"
               src={`http://localhost:3005/uploads/${
@@ -102,7 +102,7 @@ function ArtistProfilePage() {
               {artistProfile.firstName} {artistProfile.lastName}
             </h1>
             <span className="text-sm">{artistProfile.email}</span>
-            <section className="flex flex-col h-96 space-y-5 mt-5 text-sm">
+            <section className="flex flex-col max-h-fit h-fit space-y-5 mt-5 text-sm">
               <hr />
               <div className="flex flex-col">
                 <span className="font-bold text-xs">Art Style</span>
