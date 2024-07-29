@@ -106,7 +106,11 @@ function ArtistProfilePage() {
               <hr />
               <div className="flex flex-col">
                 <span className="font-bold text-xs">Art Style</span>
-                <span>{artistProfile.artStyle || "Not yet added"}</span>
+                <span>
+                  {artistProfile.artStyle
+                    ? artistProfile.artStyle
+                    : "Not yet added"}
+                </span>
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-xs">Address</span>

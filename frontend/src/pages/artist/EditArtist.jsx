@@ -73,6 +73,7 @@ function EditArtist() {
     formData.append("birthdate", artistProfile.birthdate);
     formData.append("age", artistProfile.age);
     formData.append("address", artistProfile.address);
+    formData.append("artStyle", artistProfile.artStyle);
 
     // console.log(formData);
 
@@ -267,6 +268,21 @@ function EditArtist() {
                 </div>
                 <div className="w-full">
                   <label className="block text-sm font-medium leading-6">
+                    Art Style
+                  </label>
+                  <div className="my-2">
+                    <input
+                      type="text"
+                      name="artStyle"
+                      value={artistProfile.artStyle || ""}
+                      onChange={handleChange}
+                      className="w-full border-box p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400"
+                      placeholder="Art Style"
+                    />
+                  </div>
+                </div>
+                <div className="w-full">
+                  <label className="block text-sm font-medium leading-6">
                     Bio
                   </label>
                   <div className="my-2">
@@ -276,6 +292,7 @@ function EditArtist() {
                       onChange={handleChange}
                       className="w-full border-box p-2.5 pr-10 placeholder:text-gray-400 placeholder:text-sm ring-1 ring-inset ring-gray-400"
                       placeholder="Tell us a little bit of yourself"
+                      rows="5"
                     ></textarea>
                   </div>
                 </div>
