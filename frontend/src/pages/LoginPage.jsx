@@ -118,7 +118,7 @@ function LoginPage() {
                       />
                     </div>
                   </div>
-                  <div className="flex flex-col gap-2 justify-center w-full mt-8">
+                  <div className="flex flex-col gap-2 justify-center w-full mt-8 lg:flex-row">
                     <button
                       className="bg-primary text-white font-bold w-full p-3 hover:bg-primary-light"
                       type="submit"
