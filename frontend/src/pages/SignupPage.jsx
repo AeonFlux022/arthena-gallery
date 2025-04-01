@@ -78,12 +78,12 @@ function SignupPage() {
   return (
     <>
       {/* <Header /> */}
-      <div className=" bg-neutral">
-        <section className="flex p-5 flex-col lg:p-10 lg:flex-row">
-          <div className="flex flex-col w-full justify-center p-8 lg:w-3/4  bg-white border border-1">
-            <div className="justify-center mx-auto">
+      <div className="bg-neutral">
+        <section className="flex h-dvh flex-col lg:flex-row">
+          <div className="flex flex-col w-full justify-center p-8 lg:w-3/4">
+            <div className="justify-center w-full mx-auto">
               <div className="leading-6 mb-6">
-                <h1 className="text-4xl">Join us today!</h1>
+                <h1 className="text-4xl font-bold">Join us today!</h1>
                 <p className="text-xl">Sign up and let's get started.</p>
               </div>
               <div className="">
@@ -289,7 +289,7 @@ function SignupPage() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col bg-primary text-center justify-center gap-3 p-5 text-white lg:w-1/3">
+          <div className="flex flex-col bg-primary text-center justify-center gap-2 p-8 text-white lg:w-1/3">
             <h1 className="text-3xl">Already a member?</h1>
             <p className="text-xl">Login to access your account.</p>
             <div className="justify-center mt-4">

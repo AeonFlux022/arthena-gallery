@@ -77,8 +77,8 @@ function LoginPage() {
     <>
       <div className="h-dvh bg-neutral">
         <section className="flex h-full px-0 flex-col lg:flex-row">
-          <div className="flex flex-col w-full justify-center py-5 lg:w-3/4">
-            <div className="w-full px-20 pt-20 mb-20">
+          <div className="flex flex-col w-full justify-center p-8 lg:w-3/4">
+            <div className="w-full">
               <AlertNotification alert={alert} closeAlert={closeAlert} />
               <div className="leading-6 mb-6">
                 <h1 className="text-4xl font-bold">
@@ -118,7 +118,7 @@ function LoginPage() {
                       />
                     </div>
                   </div>
-                  <div className="flex flex-row gap-2 justify-center mt-8">
+                  <div className="flex flex-col gap-2 justify-center w-full mt-8">
                     <button
                       className="bg-primary text-white font-bold w-full p-3 hover:bg-primary-light"
                       type="submit"
@@ -136,7 +136,7 @@ function LoginPage() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col bg-primary text-center justify-center gap-3 p-5 text-white lg:w-1/3">
+          <div className="flex flex-col bg-primary text-center justify-center gap-3 p-8 text-white lg:w-1/3">
             <h1 className="text-3xl">New to Arthena Gallery?</h1>
             <p className="text-xl">Signup to create an account.</p>
             <div className="justify-center mt-4">
